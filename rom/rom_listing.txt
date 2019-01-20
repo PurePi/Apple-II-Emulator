@@ -1,0 +1,124 @@
+                       * listing for rom.asm generated on 2019-1-19 at 21:14:10
+
+FA00:              1         ORG $FA00
+FA00:              2 
+FA00:              3 ACC     EQU $00     ; zeropage addresses used for storing important data
+FA00:              4 XREG    EQU $01
+FA00:              5 YREG    EQU $02
+FA00:              6 STATUS  EQU #03
+FA00:              7 SPTR    EQU $04
+FA00:              8 COUTLO  EQU $05
+FA00:              9 COUTHI  EQU $06
+FA00:             10 
+FA00:  4C 36 FA   11         JMP kbdex   ; jump to example
+FA03:             12 
+FA03:             13 *       writing to screen example
+FA03:             14 
+FA03:             15 ODDROWL EQU $00     ; low byte of odd-numbered rows (first row is row 1 in this example)
+FA03:             16 EVNROWL EQU $80
+FA03:             17 ROW1H   EQU $04
+FA03:             18 ROW3H   EQU $05
+FA03:             19 ROW5H   EQU $06
+FA03:             20 
+FA03:  A9 21      21 printex LDA #$21        ; starting ascii code
+FA05:  A0 00      22         LDY #$00        ; index in row to place char
+FA07:             23 
+FA07:  A2 04      24         LDX #ROW1H      ; put address of row into COUTLO, COUTHI
+FA09:  86 06      25         STX COUTHI
+FA0B:  A2 00      26         LDX #ODDROWL
+FA0D:  86 05      27         STX COUTLO
+FA0F:  20 25 FA   28         JSR outloop
+FA12:             29 
+FA12:  A2 80      30         LDX #EVNROWL    ; adjust address, row 2 is even but page is the same os COUTHI can stay
+FA14:  86 05      31         STX COUTLO
+FA16:  20 25 FA   32         JSR outloop
+FA19:             33 
+FA19:  A2 05      34         LDX #ROW3H      ; adjust row base address, page also changes this time
+FA1B:  86 06      35         STX COUTHI
+FA1D:  A2 00      36         LDX #ODDROWL
+FA1F:  86 05      37         STX COUTLO
+FA21:  20 25 FA   38         JSR outloop
+FA24:  02         39 done    HCF
+FA25:             40 
+FA25:  91 05      41 outloop STA (COUTLO),Y  ; store character at row base address + Y
+FA27:  69 01      42         ADC #$01
+FA29:  C9 7F      43         CMP #$7F
+FA2B:  F0 F7      44         BEQ done
+FA2D:  C8         45         INY
+FA2E:  C0 28      46         CPY #$28
+FA30:  D0 F3      47         BNE outloop
+FA32:  A0 00      48         LDY #$00
+FA34:  18         49         CLC             ; CPY sets carry if Y >= data ($28 in this case)
+FA35:  60         50         RTS
+FA36:             51 
+FA36:             52 *       print keyboard input onto screen example
+FA36:             53 
+FA36:  A0 00      54 kbdex   LDY #$00        ; set up screen output the same way as above example
+FA38:             55 
+FA38:  A2 04      56         LDX #ROW1H
+FA3A:  86 06      57         STX COUTHI
+FA3C:  A2 00      58         LDX #ODDROWL
+FA3E:  86 05      59         STX COUTLO
+FA40:             60 
+FA40:  2C 00 C0   61 scanin  BIT $C000   ; check if highest bit is on (input received flag)
+FA43:  30 03      62         BMI input
+FA45:  4C 40 FA   63         JMP scanin
+FA48:             64 
+FA48:  AD 00 C0   65 input   LDA $C000   ; get that input, remove highest bit to get ascii code
+FA4B:  29 7F      66         AND #$7F
+FA4D:  8D 10 C0   67         STA $C010   ; reference $C010-$C01F to clear input flag on $C000-$C00F
+FA50:  91 05      68         STA (COUTLO),Y
+FA52:  C9 53      69         CMP #'S'    ; 'S' = second page (only placing text on first page so it'll be blank)
+FA54:  F0 0F      70         BEQ secndpg
+FA56:  C9 50      71         CMP #'P'    ; 'P' = first page
+FA58:  F0 11      72         BEQ frstpg
+FA5A:  C8         73 cont    INY
+FA5B:  C0 28      74         CPY #$28
+FA5D:  D0 E1      75         BNE scanin
+FA5F:  A0 00      76         LDY #$00    ; just wrap around same line
+FA61:  18         77         CLC         ; CPY sets carry if Y >= data ($28 in this case)
+FA62:  4C 40 FA   78         JMP scanin
+FA65:             79 
+FA65:  8D 55 C0   80 secndpg STA $C055
+FA68:  4C 5A FA   81         JMP cont
+FA6B:  8D 54 C0   82 frstpg  STA $C054
+FA6E:  4C 5A FA   83         JMP cont
+FA71:             84 
+FA71:             85 *       peripheral card PROM example
+FA71:             86 ***     NOT YET IMPLEMENTED
+FA71:             87 
+FA71:  20 8F FA   88         JSR SAVE        ; save all registers
+FA74:  78         89         SEI             ; disable interrupts
+FA75:  BA         90         TSX             ; stack pointer points to page of return address that JSR just pushed, slot n is in the form of $Cn
+FA76:  BD 00 01   91         LDA $0100,X     ; load that page number into A
+FA79:  8D F8 07   92         STA $07F8       ; $7F8 is meant for keeping page number of active card
+FA7C:  29 0F      93         AND #$0F
+FA7E:  0A         94         ASL A
+FA7F:  0A         95         ASL A
+FA80:  0A         96         ASL A
+FA81:  0A         97         ASL A
+FA82:  AA         98         TAX             ; X now has slot number in the form of $n0
+FA83:  BD 80 C0   99         LDA $C080,X     ; access byte 0 of your card's scratchpad
+FA86:  BD 81 C0  100         LDA $C081,X     ; access byte 1 of your card's scratchpad (up to $C08F,X for byte 15)
+FA89:  AD FF CF  101         LDA $CFFF       ; request access to expansion rom by referencing $CFFF
+FA8C:  20 00 C8  102         JSR $C800       ; can now access your card's expansion rom ($C800-$CFFF)
+FA8F:            103 
+FA8F:            104 *       rom subroutines
+FA8F:            105 
+FA8F:  85 00     106 SAVE    STA ACC
+FA91:  86 01     107         STX XREG
+FA93:  84 02     108         STY YREG
+FA95:  08        109         PHP
+FA96:  68        110         PLA
+FA97:  85 03     111         STA STATUS
+FA99:  BA        112         TSX
+FA9A:  86 04     113         STX SPTR
+FA9C:  D8        114         CLD
+FA9D:  60        115         RTS
+FA9E:  A5 03     116 RESTORE LDA STATUS
+FAA0:  48        117         PHA
+FAA1:  A5 00     118         LDA ACC
+FAA3:  A6 01     119         LDX XREG
+FAA5:  A4 02     120         LDY YREG
+FAA7:  28        121         PLP
+FAA8:  60        122         RTS

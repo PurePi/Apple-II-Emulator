@@ -32,7 +32,6 @@ static void insertChar(char page, int startAt, char character)
     char r0 = 0, r1 = 0, r2 = 0, r3 = 0, r4 = 0,
             r5 = 0, r6 = 0, r7 = 0;
 
-    // TODO replace these with chars
     switch(character)
     {
     case '\t':
