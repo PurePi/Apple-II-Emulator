@@ -32,8 +32,14 @@ static char readFile(char *filename, unsigned short readTo)
 
 int main()
 {
-    readFile("rom/vectors.bin", 0xFFFA);
-    readFile("rom/rom.bin", 0xFA00);
+    if(!readFile("rom/vectors.bin", 0xFFFA))
+    {
+        return 0;
+    }
+    if(!readFile("rom/rom.bin", 0xFA00))
+    {
+        return 0;
+    }
 
     memMutex = CreateMutex(NULL, FALSE, NULL);
     screenMutex = CreateMutex(NULL, FALSE, NULL);
@@ -45,15 +51,12 @@ int main()
     {
     case 1:
         printf("glfw init error\n");
-        return 0;
+        break;
     case 2:
-        printf("glfw create window error\n");;
-        return 0;
+        printf("glfw create window error\n");
     default:
         break;
     }
-
-
 
     return 0;
 }

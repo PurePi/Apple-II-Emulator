@@ -1,6 +1,6 @@
-        ORG $FA00
+        ORG $FA00       ; we know this file will be loaded into address $FA00, and the reset vector points here
 
-ACC     EQU $00     ; zeropage addresses used for storing important data
+ACC     EQU $00         ; zeropage addresses used for storing important data
 XREG    EQU $01
 YREG    EQU $02
 STATUS  EQU #03
@@ -8,15 +8,14 @@ SPTR    EQU $04
 COUTLO  EQU $05
 COUTHI  EQU $06
 
-        JMP kbdex   ; jump to example
+        JMP kbdex       ; jump to an example
 
 *       writing to screen example
 
-ODDROWL EQU $00     ; low byte of odd-numbered rows (first row is row 1 in this example)
+ODDROWL EQU $00         ; low byte of odd-numbered rows (first row is row 1 in this example)
 EVNROWL EQU $80
-ROW1H   EQU $04
-ROW3H   EQU $05
-ROW5H   EQU $06
+ROW1H   EQU $04         ; page number of rows 1 and 2
+ROW3H   EQU $05         ; page number of rows 3 and 4
 
 printex LDA #$21        ; starting ascii code
         LDY #$00        ; index in row to place char
@@ -27,7 +26,7 @@ printex LDA #$21        ; starting ascii code
         STX COUTLO
         JSR outloop
 
-        LDX #EVNROWL    ; adjust address, row 2 is even but page is the same os COUTHI can stay
+        LDX #EVNROWL    ; adjust row base address, row 2 is even but page is the same so COUTHI can stay
         STX COUTLO
         JSR outloop
 
@@ -46,7 +45,7 @@ outloop STA (COUTLO),Y  ; store character at row base address + Y
         CPY #$28
         BNE outloop
         LDY #$00
-        CLC             ; CPY sets carry if Y >= data ($28 in this case)
+        CLC             ; CPY sets carry if Y >= data ($28 = $28 in this case)
         RTS
 
 *       print keyboard input onto screen example
@@ -58,28 +57,28 @@ kbdex   LDY #$00        ; set up screen output the same way as above example
         LDX #ODDROWL
         STX COUTLO
 
-scanin  BIT $C000   ; check if highest bit is on (input received flag)
+scanin  BIT $C000       ; check if highest bit is on (input received flag)
         BMI input
         JMP scanin
 
-input   LDA $C000   ; get that input, remove highest bit to get ascii code
+input   LDA $C000       ; get that input, remove highest bit to get ascii code
         AND #$7F
-        STA $C010   ; reference $C010-$C01F to clear input flag on $C000-$C00F
+        STA $C010       ; reference $C010-$C01F to clear input flag on $C000-$C00F
         STA (COUTLO),Y
-        CMP #'S'    ; 'S' = second page (only placing text on first page so it'll be blank)
+        CMP #'S'        ; 'S' = second page (only placing text on first page so it'll be blank)
         BEQ secndpg
-        CMP #'P'    ; 'P' = first page
+        CMP #'P'        ; 'P' = first page
         BEQ frstpg
 cont    INY
         CPY #$28
         BNE scanin
-        LDY #$00    ; just wrap around same line
-        CLC         ; CPY sets carry if Y >= data ($28 in this case)
+        LDY #$00        ; just wrap around same line
+        CLC             ; CPY sets carry if Y >= data ($28 = $28 in this case)
         JMP scanin
 
-secndpg STA $C055
+secndpg STA $C055       ; switch to second page
         JMP cont
-frstpg  STA $C054
+frstpg  STA $C054       ; switch to first page
         JMP cont
 
 *       peripheral card PROM example
@@ -101,7 +100,7 @@ frstpg  STA $C054
         LDA $CFFF       ; request access to expansion rom by referencing $CFFF
         JSR $C800       ; can now access your card's expansion rom ($C800-$CFFF)
 
-*       rom subroutines
+*       ROM subroutines
 
 SAVE    STA ACC
         STX XREG
