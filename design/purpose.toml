@@ -1,6 +1,6 @@
 [REQ-BASIC]
 partof = 'REQ-software'
-text = 'After bootup the emulator must boot into a BASIC shell.'
+text = 'After bootup the emulator must boot into a BASIC shell if no bootable software is loaded into disc drive A.'
 
 [REQ-CPU]
 partof = 'REQ-purpose'
