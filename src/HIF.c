@@ -736,6 +736,17 @@ static void insertChar(char page, int startAt, char character)
         lpage1[startAt+240] = r6;
         lpage1[startAt+280] = r7;
     }
+    else
+    {
+        lpage2[startAt] = r0;
+        lpage2[startAt+40] = r1;
+        lpage2[startAt+80] = r2;
+        lpage2[startAt+120] = r3;
+        lpage2[startAt+160] = r4;
+        lpage2[startAt+200] = r5;
+        lpage2[startAt+240] = r6;
+        lpage2[startAt+280] = r7;
+    }
 }
 
 // TODO decode hex into ascii and display mode before placing onto page memory
@@ -746,20 +757,41 @@ static void insertChar(char page, int startAt, char character)
 static void textMode()
 {
     WaitForSingleObject(memMutex, INFINITE);
-    for(unsigned short base = 0x400; base < 0x800; base += 0x80)
+    if(screenFlags & pri)
     {
-        for(unsigned short ch = 0; ch < 0x28; ch++)
+        for(unsigned short base = 0x400; base < 0x800; base += 0x80)
         {
-            insertChar(1, ((base - 0x400) * 5) / 2 + ch, memory[base + ch]);
+            for(unsigned short ch = 0; ch < 0x28; ch++)
+            {
+                insertChar(1, ((base - 0x400) * 5) / 2 + ch, memory[base + ch]);
+            }
+        }
+        for(unsigned short base = 0x428; base < 0x800; base += 0x80)
+        {
+            for(unsigned short ch = 0; ch < 0x28; ch++)
+            {
+                insertChar(1, ((base - 0x428) * 5) / 2 + ch + 3840, memory[base + ch]);
+            }
         }
     }
-    for(unsigned short base = 0x428; base < 0x800; base += 0x80)
+    else
     {
-        for(unsigned short ch = 0; ch < 0x28; ch++)
+        for(unsigned short base = 0x800; base < 0xC00; base += 0x80)
         {
-            insertChar(1, ((base - 0x428) * 5) / 2 + ch + 3840, memory[base + ch]);
+            for(unsigned short ch = 0; ch < 0x28; ch++)
+            {
+                insertChar(2, ((base - 0x800) * 5) / 2 + ch, memory[base + ch]);
+            }
+        }
+        for(unsigned short base = 0x828; base < 0xC00; base += 0x80)
+        {
+            for(unsigned short ch = 0; ch < 0x28; ch++)
+            {
+                insertChar(2, ((base - 0x828) * 5) / 2 + ch + 3840, memory[base + ch]);
+            }
         }
     }
+
     ReleaseMutex(memMutex);
 }
 
@@ -807,6 +839,15 @@ static void keyInput(GLFWwindow* window, int key, int scancode, int action, int 
         return;
     }
 
+    // tab is not handled by text input
+    if(key == GLFW_KEY_TAB)
+    {
+        WaitForSingleObject(memMutex, INFINITE);
+        memset(memory + 0xC000, '\t' | 0b10000000, 16);
+        ReleaseMutex(memMutex);
+        return;
+    }
+
     char released = 0;
     WaitForSingleObject(runningMutex, INFINITE);
     if(key == GLFW_KEY_F1)
@@ -839,9 +880,7 @@ static void textInput(GLFWwindow *window, unsigned int codepoint)
     char data = (char) codepoint;
 
     WaitForSingleObject(memMutex, INFINITE);
-
     memset(memory + 0xC000, data | 0b10000000, 16);
-
     ReleaseMutex(memMutex);
 }
 

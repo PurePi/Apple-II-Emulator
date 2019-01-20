@@ -12,16 +12,17 @@ HANDLE screenMutex;
 HANDLE runningMutex;
 
 /**
- * wakes up hardware components because memory-mapped IO has been referenced
+ * interacts with hardware components if memory-mapped IO has been referenced
+ *
  * emulates the function of the I/O selector
  */
-static void wakeUp(unsigned short address)
+static void ioSelect(unsigned short address)
 {
     if(address >= 0xC010 && address < 0xD000)
     {
         if(address < 0xC020)
         {
-            // clear keyboard input flag
+            // clear keyboard strobe
             memset(memory + 0xC000, memory[0xC000] & 0b01111111, 16);
         }
         else if(address < 0xC030)
@@ -188,7 +189,7 @@ unsigned char readByte(unsigned short address)
 
     //printf("reading %02X from %04X\n", ret, address);
 
-    wakeUp(address);
+    ioSelect(address);
 
     ReleaseMutex(memMutex);
 
@@ -203,8 +204,9 @@ void writeByte(unsigned short address, unsigned char byte)
 {
     WaitForSingleObject(memMutex, INFINITE);
 
+    //printf("writing %02X to %04X\n", byte, address);
     memory[address] = byte;
-    wakeUp(address);
+    ioSelect(address);
 
     ReleaseMutex(memMutex);
 
