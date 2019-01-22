@@ -1,4 +1,4 @@
-                     * listing for rom.asm generated on 2019-1-20 at 11:30:03
+                     * listing for rom.asm generated on 2019-1-20 at 11:53:11
 
 FA00:              1         ORG $FA00       ; we know this code will be loaded into address $FA00, and the reset vector points here
 FA00:              2 
@@ -84,9 +84,9 @@ FA62:  A6 06      81 swtchpg LDX COUTHI
 FA64:  E0 08      82         CPX #PG2H       ; if high byte of row is $08, we're currently on second page so we switch to the first
 FA66:  F0 0E      83         BEQ firstpg
 FA68:  8D 55 C0   84 secndpg STA $C055       ; switch to second page
-FA6B:  84 07      85         STY PAGE1Y
-FA6D:  A4 08      86         LDY PAGE2Y
-FA6F:  A2 08      87         LDX #PG2H
+FA6B:  84 07      85         STY PAGE1Y      ; save Y offset used in first page
+FA6D:  A4 08      86         LDY PAGE2Y      ; recall the offset used in second page
+FA6F:  A2 08      87         LDX #PG2H       ; switch base address of row to that of the second page
 FA71:  86 06      88         STX COUTHI
 FA73:  4C 40 FA   89         JMP scanin
 FA76:  8D 54 C0   90 firstpg STA $C054       ; switch to first page

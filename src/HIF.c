@@ -1,10 +1,11 @@
-#include <HIF.h>
-#include <memory.h>
+#include "HIF.h"
+#include "memory.h"
 #include <GLFW/glfw3.h>
 #include <mem.h>
 #include <stdio.h>
 #include <process.h>
-#include <cpu.h>
+#include "cpu.h"
+#include "cassette.h"
 
 char running = 0;
 char screenFlagsChanged = 0;
@@ -802,6 +803,16 @@ static void textMode()
  */
 static void drawScreen()
 {
+    // TODO use something like this for flashing characters
+    /*static int test = 60;
+    test--;
+    if(test == 0)
+    {
+        printf("test = 0\n");
+        test = 60;
+    }*/
+
+    // TODO add screenMutex to protect screenFlags
     if(!(screenFlags & gr))
     {
         for(unsigned short byte = 0; byte < 7680; byte++)
@@ -811,9 +822,6 @@ static void drawScreen()
                 // leftmost pixel is MSb
                 if(((screenFlags & pri ? lpage1[byte] : lpage2[byte]) & (0b10000000 >> shift)) != 0)
                 {
-                    //int leftCoord =
-
-                    // TODO fix drawing coordinates
                     int leftCoord = (((byte * 7 + shift) % 280) * 2);
                     int upCoord = (((byte * 7 + shift) / 280) * 2);
                     glRectf((leftCoord / 280.0f) - 1, -((upCoord / 192.0f) - 1), (leftCoord + 2) / 280.0f - 1,
@@ -854,7 +862,6 @@ static void keyInput(GLFWwindow* window, int key, int scancode, int action, int 
     {
         if(cpuThread != 0)
         {
-            printf("resetting CPU\n");
             running = 0;
         }
         ReleaseMutex(runningMutex);
@@ -863,9 +870,17 @@ static void keyInput(GLFWwindow* window, int key, int scancode, int action, int 
     }
     else if(key == GLFW_KEY_F2 && cpuThread != 0)
     {
-        printf("shutting down CPU\n");
         running = 0;
+        closeTape();
         // TODO figure out shutting everything down
+    }
+    else if(key == GLFW_KEY_F3)
+    {
+        setRecord();
+    }
+    else if(key == GLFW_KEY_F4)
+    {
+        setPlay();
     }
     if(!released)
     {
@@ -875,6 +890,8 @@ static void keyInput(GLFWwindow* window, int key, int scancode, int action, int 
 
 }
 
+
+// TODO move text input to keyInput to handle ctrl+ commands
 static void textInput(GLFWwindow *window, unsigned int codepoint)
 {
     char data = (char) codepoint;
@@ -902,6 +919,7 @@ int startGLFW()
 
     glfwSetKeyCallback(window, keyInput);
     glfwSetCharCallback(window, textInput);
+    glfwSwapInterval(1);
 
     fillBuffer = textMode;
 
@@ -938,3 +956,5 @@ int startGLFW()
 
     return 0;
 }
+
+// TODO use PortAudio for sound

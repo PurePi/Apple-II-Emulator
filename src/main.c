@@ -2,6 +2,7 @@
 #include <HIF.h>
 #include <cpu.h>
 #include <memory.h>
+#include "peripheral.h"
 
 /**
  * reads a file into memory
@@ -9,7 +10,7 @@
  * @param readTo where in memory to place the contents
  * @return 0 = failure, 1 = success
  */
-static char readFile(char *filename, unsigned short readTo)
+static char readFile(char *filename, void *readTo)
 {
     size_t fileLength;
     FILE *fp = fopen(filename, "rb");
@@ -18,7 +19,7 @@ static char readFile(char *filename, unsigned short readTo)
         fseek(fp, 0, SEEK_END);
         fileLength = (size_t) ftell(fp);
         fseek(fp, 0, SEEK_SET);
-        if(fread(memory + readTo, 1, fileLength, fp) != fileLength)
+        if(fread(readTo, 1, fileLength, fp) != fileLength)
         {
             printf("Error when reading %s", filename);
             fclose(fp);
@@ -32,11 +33,16 @@ static char readFile(char *filename, unsigned short readTo)
 
 int main()
 {
-    if(!readFile("rom/vectors.bin", 0xFFFA))
+    if(!readFile("rom/vectors.bin", memory + 0xFFFA))
     {
         return 0;
     }
-    if(!readFile("rom/rom.bin", 0xFA00))
+    if(!readFile("rom/rom.bin", memory + 0xFA00))
+    {
+        return 0;
+    }
+
+    if(!readCards())
     {
         return 0;
     }

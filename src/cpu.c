@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <cpu.h>
-#include <HIF.h>
-#include <memory.h>
+#include "cpu.h"
+#include "HIF.h"
+#include "memory.h"
 #include <process.h>
 
 // PSA: refer to these two pages while reading this code:
@@ -59,11 +59,11 @@ struct instruction
     unsigned a : 3;
 };
 
-// individual bits of part a in branch instructions have special meaning
+// individual bits of aaa in branch instructions have special meaning
 struct branchInstruction
 {
     unsigned unused : 5;
-    unsigned y : 1;     // compare flag with
+    unsigned y : 1;     // compare flag value
     unsigned x : 2;     // flag selector
 };
 
@@ -757,26 +757,12 @@ static void run()
         ReleaseMutex(runningMutex);
         //Sleep(200);
         instructionsRun++;
-        //WaitForSingleObject(runningMutex, INFINITE);
     }
 
-    // release again because the loop didn't get to release it when the condition wasn't met
-    //ReleaseMutex(runningMutex);
 
     printf("Done after %d instructions\n\n", instructionsRun);
     printf("PC: %04X\t%02X %02X %02X\n\nA\tX\tY\tS\tN V B D I Z C\n%02X\t%02X\t%02X\t%02X\t%u %u %u %u %u %u %u\n\n", PC, memory[PC], memory[PC+1], memory[PC+2], A, X, Y, S, N, V, B, D, I, Z, C);
-/*    printf("Contents of $0400:\n");
-    WaitForSingleObject(memMutex, INFINITE);
-    for(unsigned short base = 0x400; base < 0x800; base += 0x40)
-    {
-        printf("%04X: ", base);
-        for(unsigned short ch = 0; ch < 0x28; ch++)
-        {
-            printf("%c ", memory[base + ch]);
-        }
-        printf("\n");
-    }
-    ReleaseMutex(memMutex);*/
+
 
     WaitForSingleObject(runningMutex, INFINITE);
     cpuThread = 0;

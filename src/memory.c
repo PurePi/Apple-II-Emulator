@@ -1,14 +1,15 @@
-#include <memory.h>
-#include <HIF.h>
+#include "memory.h"
+#include "HIF.h"
+#include "cassette.h"
 #include <stdio.h>
 
 unsigned char memory[0x10000];
 
 // for accessing memory
 HANDLE memMutex;
-// for telling the GLFW thread that the contents of one of the screen pages or flags has changed
+// for telling the GLFW thread that the contents of one of the flags has changed
 HANDLE screenMutex;
-// for telling GLFW the CPU if the CLU is running or not
+// for telling the GLFW thread if the CPU is running or not
 HANDLE runningMutex;
 
 /**
@@ -27,6 +28,7 @@ static void ioSelect(unsigned short address)
         }
         else if(address < 0xC030)
         {
+            record();
             // cassette output toggle
         }
         else if(address < 0xC040)
@@ -102,7 +104,7 @@ static void ioSelect(unsigned short address)
             {
             case 0xC060:
             case 0xC068: // cassette input
-
+                playback();
                 break;
             case 0xC061:
             case 0xC069: // pushbutton 1
@@ -185,11 +187,11 @@ unsigned char readByte(unsigned short address)
 {
     WaitForSingleObject(memMutex, INFINITE);
 
+    ioSelect(address);
+
     unsigned char ret = memory[address];
 
     //printf("reading %02X from %04X\n", ret, address);
-
-    ioSelect(address);
 
     ReleaseMutex(memMutex);
 
@@ -203,9 +205,10 @@ unsigned char readByte(unsigned short address)
 void writeByte(unsigned short address, unsigned char byte)
 {
     WaitForSingleObject(memMutex, INFINITE);
-
+    
     //printf("writing %02X to %04X\n", byte, address);
     memory[address] = byte;
+
     ioSelect(address);
 
     ReleaseMutex(memMutex);
@@ -218,7 +221,7 @@ void writeByte(unsigned short address, unsigned char byte)
     // when CPU executes next instruction in PROM, IO SELECT will be re-enabled
 
     // 1. access GPIO space to turn on DEVICE SELECT flip flop to partially turn on expansion ROM
-    // 2. access PROM space to turn on IO SELECT line, completely turning of expansion ROM
+    // 2. access PROM space to turn on IO SELECT line, completely turning on expansion ROM
     // 3. PROM accesses $CFFF turn turn off all DEVICE SELECT flip-flops
     // 4. fetching next instruction in PROM re-activates expansion ROM
     // 5. PROM now has full access to its expansion ROM via address $C800-$CFFF
