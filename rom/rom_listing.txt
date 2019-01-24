@@ -1,4 +1,4 @@
-                     * listing for rom.asm generated on 2019-1-20 at 11:53:11
+                     * listing for rom.asm generated on 2019-1-23 at 16:35:45
 
 FA00:              1         ORG $FA00       ; we know this code will be loaded into address $FA00, and the reset vector points here
 FA00:              2 
@@ -12,7 +12,7 @@ FA00:              9 COUTHI  EQU $06
 FA00:             10 PAGE1Y  EQU $07         ; keep track of Y position on first page
 FA00:             11 PAGE2Y  EQU $08         ; keep track of Y position on second page
 FA00:             12 
-FA00:  4C 36 FA   13         JMP kbdex       ; jump to an example
+FA00:  4C 84 FA   13         JMP card1       ; jump to an example
 FA03:             14 
 FA03:             15 *       writing to screen example
 FA03:             16 
@@ -96,43 +96,36 @@ FA7D:  A2 04      93         LDX #ROW1H
 FA7F:  86 06      94         STX COUTHI
 FA81:  4C 40 FA   95         JMP scanin
 FA84:             96 
-FA84:             97 *       peripheral card PROM example
-FA84:             98 ***     NOT YET IMPLEMENTED
-FA84:             99 
-FA84:  20 A2 FA  100         JSR SAVE        ; save all registers
-FA87:  78        101         SEI             ; disable interrupts
-FA88:  BA        102         TSX             ; stack pointer points to page of return address that JSR just pushed, slot n is in the form of $Cn
-FA89:  BD 00 01  103         LDA $0100,X     ; load that page number into A
-FA8C:  8D F8 07  104         STA $07F8       ; $7F8 is designated to keep page number of active card
-FA8F:  29 0F     105         AND #$0F
-FA91:  0A        106         ASL A
-FA92:  0A        107         ASL A
-FA93:  0A        108         ASL A
-FA94:  0A        109         ASL A
-FA95:  AA        110         TAX             ; X now has slot number in the form of $n0
-FA96:  BD 80 C0  111         LDA $C080,X     ; access byte 0 of your card's scratchpad
-FA99:  BD 81 C0  112         LDA $C081,X     ; access byte 1 of your card's scratchpad (up to $C08F,X for byte 15)
-FA9C:  AD FF CF  113         LDA $CFFF       ; request access to expansion rom by referencing $CFFF
-FA9F:  20 00 C8  114         JSR $C800       ; can now access your card's expansion rom ($C800-$CFFF)
-FAA2:            115 
-FAA2:            116 *       ROM subroutines
-FAA2:            117 
-FAA2:  85 00     118 SAVE    STA ACC
-FAA4:  86 01     119         STX XREG
-FAA6:  84 02     120         STY YREG
-FAA8:  08        121         PHP
-FAA9:  68        122         PLA
-FAAA:  85 03     123         STA STATUS
-FAAC:  BA        124         TSX
-FAAD:  86 04     125         STX SPTR
-FAAF:  D8        126         CLD
+FA84:             97         ; using peripheral card in slot 1 example
+FA84:             98 
+FA84:  8D 90 C0   99 card1   STA $C090       ; first need to reference slot 1's GPIO space to select it
+FA87:  20 00 C1  100         JSR $C100       ; jump to its PROM
+FA8A:            101 
+FA8A:  8D C4 C0  102         STA $C0C4       ; now let's use slot 4
+FA8D:  20 00 C4  103         JSR $C400
+FA90:            104 
+FA90:  8D 90 C0  105         STA $C090       ; and slot 1 again
+FA93:  20 00 C1  106         JSR $C100
+FA96:  02        107         HCF
+FA97:            108 
+FA97:            109 *       ROM subroutines
+FA97:            110 
+FA97:  85 00     111 SAVE    STA ACC
+FA99:  86 01     112         STX XREG
+FA9B:  84 02     113         STY YREG
+FA9D:  08        114         PHP
+FA9E:  68        115         PLA
+FA9F:  85 03     116         STA STATUS
+FAA1:  BA        117         TSX
+FAA2:  86 04     118         STX SPTR
+FAA4:  D8        119         CLD
+FAA5:  60        120         RTS
+FAA6:  A5 03     121 RESTORE LDA STATUS
+FAA8:  48        122         PHA
+FAA9:  A5 00     123         LDA ACC
+FAAB:  A6 01     124         LDX XREG
+FAAD:  A4 02     125         LDY YREG
+FAAF:  28        126         PLP
 FAB0:  60        127         RTS
-FAB1:  A5 03     128 RESTORE LDA STATUS
-FAB3:  48        129         PHA
-FAB4:  A5 00     130         LDA ACC
-FAB6:  A6 01     131         LDX XREG
-FAB8:  A4 02     132         LDY YREG
-FABA:  28        133         PLP
-FABB:  60        134         RTS
 
-                     * Assembled 188 bytes
+                     * Assembled 177 bytes

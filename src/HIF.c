@@ -6,6 +6,7 @@
 #include <process.h>
 #include "cpu.h"
 #include "cassette.h"
+#include "peripheral.h"
 
 char running = 0;
 char screenFlagsChanged = 0;
@@ -864,6 +865,8 @@ static void keyInput(GLFWwindow* window, int key, int scancode, int action, int 
         {
             running = 0;
         }
+        // release here so run can have time to see that running
+        // has been set to 0 and return before calling reset
         ReleaseMutex(runningMutex);
         released = 1;
         reset();
@@ -871,8 +874,6 @@ static void keyInput(GLFWwindow* window, int key, int scancode, int action, int 
     else if(key == GLFW_KEY_F2 && cpuThread != 0)
     {
         running = 0;
-        closeTape();
-        // TODO figure out shutting everything down
     }
     else if(key == GLFW_KEY_F3)
     {
@@ -882,14 +883,25 @@ static void keyInput(GLFWwindow* window, int key, int scancode, int action, int 
     {
         setPlay();
     }
+
     if(!released)
     {
         ReleaseMutex(runningMutex);
     }
-
-
 }
 
+/**
+ * handles window close event
+ * @param window the window to close
+ */
+static void closeWindow(GLFWwindow *window)
+{
+
+    WaitForSingleObject(runningMutex, INFINITE);
+    running = 0;
+    ReleaseMutex(runningMutex);
+    glfwTerminate();
+}
 
 // TODO move text input to keyInput to handle ctrl+ commands
 static void textInput(GLFWwindow *window, unsigned int codepoint)

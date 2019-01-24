@@ -10,7 +10,7 @@ COUTHI  EQU $06
 PAGE1Y  EQU $07         ; keep track of Y position on first page
 PAGE2Y  EQU $08         ; keep track of Y position on second page
 
-        JMP kbdex       ; jump to an example
+        JMP cardex      ; jump to an example
 
 *       writing to screen example
 
@@ -94,24 +94,17 @@ firstpg STA $C054       ; switch to first page
         STX COUTHI
         JMP scanin
 
-*       peripheral card PROM example
-***     NOT YET IMPLEMENTED
+        ; using peripheral cards in slot 1 and 4 example (both contain the same card)
 
-        JSR SAVE        ; save all registers
-        SEI             ; disable interrupts
-        TSX             ; stack pointer points to page of return address that JSR just pushed, slot n is in the form of $Cn
-        LDA $0100,X     ; load that page number into A
-        STA $07F8       ; $7F8 is designated to keep page number of active card
-        AND #$0F
-        ASL A
-        ASL A
-        ASL A
-        ASL A
-        TAX             ; X now has slot number in the form of $n0
-        LDA $C080,X     ; access byte 0 of your card's scratchpad
-        LDA $C081,X     ; access byte 1 of your card's scratchpad (up to $C08F,X for byte 15)
-        LDA $CFFF       ; request access to expansion rom by referencing $CFFF
-        JSR $C800       ; can now access your card's expansion rom ($C800-$CFFF)
+cardex  STA $C090       ; first need to reference slot 1's GPIO space to select it
+        JSR $C100       ; jump to its PROM
+
+        STA $C0C4       ; now let's use slot 4 (can reference any byte in its GPIO space, not only byte 0)
+        JSR $C400
+
+        STA $C090       ; and slot 1 again
+        JSR $C100
+        HCF
 
 *       ROM subroutines
 

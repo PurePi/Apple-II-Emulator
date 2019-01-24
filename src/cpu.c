@@ -2,6 +2,8 @@
 #include "cpu.h"
 #include "HIF.h"
 #include "memory.h"
+#include "peripheral.h"
+#include "cassette.h"
 #include <process.h>
 
 // PSA: refer to these two pages while reading this code:
@@ -755,7 +757,9 @@ static void run()
             break;
         }
         ReleaseMutex(runningMutex);
-        //Sleep(200);
+        // TODO maybe add a timer and let user specify speed in MHz in config.json
+
+        //Sleep(100);
         instructionsRun++;
     }
 
@@ -763,6 +767,8 @@ static void run()
     printf("Done after %d instructions\n\n", instructionsRun);
     printf("PC: %04X\t%02X %02X %02X\n\nA\tX\tY\tS\tN V B D I Z C\n%02X\t%02X\t%02X\t%02X\t%u %u %u %u %u %u %u\n\n", PC, memory[PC], memory[PC+1], memory[PC+2], A, X, Y, S, N, V, B, D, I, Z, C);
 
+    unmountCards();
+    closeTape();
 
     WaitForSingleObject(runningMutex, INFINITE);
     cpuThread = 0;
@@ -776,7 +782,14 @@ static void run()
  */
 void reset()
 {
-    Sleep(1); // give previous run thread time to end if F1 was pressed
+    Sleep(10); // give previous run thread and peripheral cards time to end in case F1 was pressed
+
+    if(!mountCards())
+    {
+        unmountCards();
+        return;
+    }
+
     PC = *((unsigned short *) (memory + 0xFFFC));
     S = 0xFF;
     I = 1;

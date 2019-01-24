@@ -7,16 +7,18 @@
 struct peripheralCard
 {
     void *handle;
-    void (*startup)();
+    void *startup; // cast to appropriate function depending on slot in mountCards
     void (*shutdown)();
+    void (*memRef)(unsigned short address);
+    unsigned char (*deviceSelect)(int which, unsigned char value);
     char expansionRom[0x800];
-    char deviceSelect;
-    char IOSelect;
-    char expansionAccess;
+    char devSel;
+    char IOStrobe;
 };
 
 extern struct peripheralCard peripherals[8];
 
-extern char readCards();
+extern char mountCards();
+extern void unmountCards();
 
 #endif //APPLE_II_EMULATOR_PERIPHERAL_H

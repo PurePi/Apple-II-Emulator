@@ -1,10 +1,10 @@
 {
   "tape" : "test",
   "slot 0" : "",
-  "slot 1" : "",
+  "slot 1" : "testCard",
   "slot 2" : "",
   "slot 3" : "",
-  "slot 4" : "",
+  "slot 4" : "testCard",
   "slot 5" : "",
   "slot 6" : "",
   "slot 7" : ""

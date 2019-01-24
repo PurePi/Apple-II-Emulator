@@ -1,0 +1,3 @@
+X:/CLionProjects/Apple-II-Emulator/cards/testCard/cmake-build-debug/CMakeFiles/testCard.dir
+X:/CLionProjects/Apple-II-Emulator/cards/testCard/cmake-build-debug/CMakeFiles/edit_cache.dir
+X:/CLionProjects/Apple-II-Emulator/cards/testCard/cmake-build-debug/CMakeFiles/rebuild_cache.dir

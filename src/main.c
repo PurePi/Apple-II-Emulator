@@ -42,11 +42,6 @@ int main()
         return 0;
     }
 
-    if(!readCards())
-    {
-        return 0;
-    }
-
     memMutex = CreateMutex(NULL, FALSE, NULL);
     screenMutex = CreateMutex(NULL, FALSE, NULL);
     runningMutex = CreateMutex(NULL, FALSE, NULL);

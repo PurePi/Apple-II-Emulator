@@ -31,7 +31,7 @@ static int jsonStart(const char *json, jsmntok_t *token, const char *str)
  * reads the config file and loads peripheral cards for use
  * @return 0 = failure, 1 = success
  */
-char readCards()
+char mountCards()
 {
     static char periphCard[FILENAME_MAX];
     char *json;
@@ -79,17 +79,16 @@ char readCards()
         if(jsonStart(json, &tokens[tok], "slot "))
         {
             strncpy(periphCard, json + tokens[tok].start, (size_t) (tokens[tok].end - tokens[tok].start));
-            //printf("card # %c\n", json[tokens[tok].end - 1]);
             json[tokens[tok+1].end] = 0;
             if(!isdigit(json[tokens[tok].end - 1]) ||  strlen(json + tokens[tok+1].start) == 0)
             {
                 continue;
             }
             json[tokens[tok].end] = 0;
-            //printf("value: %s\n", json + tokens[tok+1].start);
+
             memcpy(periphCard, "cards/", 6);
             memcpy(periphCard + 6, json + tokens[tok+1].start, strlen(json + tokens[tok+1].start));
-            //memcpy(periphCard + 6 + strlen(json + tokens[tok+1].start), ".dll", 5);
+            memcpy(periphCard + 6 + strlen(json + tokens[tok+1].start), ".dll", 5);
             int cardNumber = strtol(json +tokens[tok].end - 1, NULL, 10);
             if(errno == EINVAL)
             {
@@ -102,21 +101,39 @@ char readCards()
                 return 0;
             }
 
-            // TODO make a dll to test this
-            printf("Finding %s for slot %d\n", periphCard, cardNumber);
+            //printf("Mounting %s for slot %d\n", periphCard, cardNumber);
             peripherals[cardNumber].handle = dlopen(periphCard, RTLD_LAZY | RTLD_LOCAL);
             peripherals[cardNumber].startup = dlsym(peripherals[cardNumber].handle, "startup");
             if(peripherals[cardNumber].startup == NULL)
             {
                 printf("Could not find startup in %s", periphCard);
+                return 0;
             }
             peripherals[cardNumber].shutdown = dlsym(peripherals[cardNumber].handle, "shutdown");
             if(peripherals[cardNumber].shutdown == NULL)
             {
                 printf("Could not find shutdown in %s", periphCard);
+                return 0;
+            }
+            peripherals[cardNumber].deviceSelect = dlsym(peripherals[cardNumber].handle, "deviceSelect");
+            if(peripherals[cardNumber].deviceSelect == NULL)
+            {
+                printf("Could not find deviceSelect in %s", periphCard);
+                return 0;
             }
 
-            if(cardNumber != 0)
+            if(cardNumber == 0)
+            {
+                peripherals[cardNumber].memRef = dlsym(peripherals[cardNumber].handle, "memRef");
+                if(peripherals[cardNumber].memRef == NULL)
+                {
+                    printf("Could not find memRef in %s", periphCard);
+                    return 0;
+                }
+                // startup takes pointer to memory in this case
+                ((void (*) (unsigned char *)) peripherals[cardNumber].startup)(memory);
+            }
+            else
             {
                 memcpy(periphCard + 6 + strlen(json + tokens[tok+1].start), "PROM.bin", 9);
                 FILE *promFile = fopen(periphCard, "rb");
@@ -144,35 +161,60 @@ char readCards()
                     printf("Error when opening %s", periphCard);
                     return 0;
                 }
-            }
-            memcpy(periphCard + 6 + strlen(json + tokens[tok+1].start), "XROM.bin", 9);
-            FILE *xromFile = fopen(periphCard, "rb");
-            if(xromFile)
-            {
-                fseek(xromFile, 0, SEEK_END);
-                size_t fileLength = (size_t) ftell(xromFile);
-                fseek(xromFile, 0, SEEK_SET);
-
-                if(fileLength > 0x800)
+                memcpy(periphCard + 6 + strlen(json + tokens[tok+1].start), "XROM.bin", 9);
+                FILE *xromFile = fopen(periphCard, "rb");
+                if(xromFile)
                 {
-                    printf("XROM file %s is larger than 2048 bytes", periphCard);
-                }
+                    fseek(xromFile, 0, SEEK_END);
+                    size_t fileLength = (size_t) ftell(xromFile);
+                    fseek(xromFile, 0, SEEK_SET);
 
-                if(fread(peripherals[cardNumber].expansionRom, 1, fileLength, xromFile) != fileLength)
-                {
-                    printf("Error when reading %s", periphCard);
+                    if(fileLength > 0x800)
+                    {
+                        printf("XROM file %s is larger than 2048 bytes", periphCard);
+                    }
+
+                    if(fread(peripherals[cardNumber].expansionRom, 1, fileLength, xromFile) != fileLength)
+                    {
+                        printf("Error when reading %s", periphCard);
+                        fclose(xromFile);
+                        return 0;
+                    }
                     fclose(xromFile);
+                }
+                else
+                {
+                    printf("Error when opening %s", periphCard);
                     return 0;
                 }
-                fclose(xromFile);
-            }
-            else
-            {
-                printf("Error when opening %s", periphCard);
-                return 0;
-            }
 
+                // startup does not take pointer to memory if not slot 0
+                ((void (*)()) peripherals[cardNumber].startup)();
+            }
         }
     }
     return 1;
+}
+
+/**
+ * unmounts all peripheral cards and shuts them down
+ */
+void unmountCards()
+{
+    for(int card = 0; card < 8; card++)
+    {
+        if(peripherals[card].handle != NULL)
+        {
+            peripherals[card].shutdown();
+        }
+    }
+    // second loop because same card (dll) could be mounted to multiple slots, so we shutdown all of them before dlclosing them
+    for(int card = 0; card < 8; card++)
+    {
+        if(peripherals[card].handle != NULL)
+        {
+            dlclose(peripherals[card].handle);
+            peripherals[card].handle = NULL;
+        }
+    }
 }

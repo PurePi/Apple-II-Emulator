@@ -1,6 +1,7 @@
 #include "memory.h"
 #include "HIF.h"
 #include "cassette.h"
+#include "peripheral.h"
 #include <stdio.h>
 
 unsigned char memory[0x10000];
@@ -11,6 +12,9 @@ HANDLE memMutex;
 HANDLE screenMutex;
 // for telling the GLFW thread if the CPU is running or not
 HANDLE runningMutex;
+
+// which peripheral card's XROM to access based on the steps detailed in peripheral cards.md
+static int selectedXROM = 0;
 
 /**
  * interacts with hardware components if memory-mapped IO has been referenced
@@ -142,37 +146,47 @@ static void ioSelect(unsigned short address)
         {
             // game controller strobe
         }
-        else if(address < 0xC090)
-        {
-            // peripheral card GPIO slot 0
-        }
-        else if(address < 0xC0A0)
-        {
-            // peripheral card GPIO slot 1
-        }
-        else if(address < 0xC0B0)
-        {
-            // peripheral card GPIO slot 2
-        }
-        else if(address < 0xC0C0)
-        {
-            // peripheral card GPIO slot 3
-        }
-        else if(address < 0xC0D0)
-        {
-            // peripheral card GPIO slot 4
-        }
-        else if(address < 0xC0E0)
-        {
-            // peripheral card GPIO slot 5
-        }
-        else if(address < 0xC0F0)
-        {
-            // peripheral card GPIO slot 6
-        }
+        // TODO make sure all of this works for using more than 1 card
         else if(address < 0xC100)
         {
-            // peripheral card GPIO slot 7
+            // peripheral card GPIO space, set devSel flag for card or callback if the card is active
+            int slot = ((address - 0x80) >> 4) & 0xF;
+            //printf("\naccessed GPIO space address %04X\n", address);
+            if(peripherals[slot].devSel || peripherals[slot].IOStrobe)
+            {
+                //printf("slot %d device select callback\n", slot);
+                memory[address] = peripherals[slot].deviceSelect(address & 0xF, memory[address]);
+            }
+            else
+            {
+                //printf("turning on slot %d devSel\n", slot);
+                peripherals[slot].devSel = 1;
+            }
+        }
+        else if(address < 0xC800)
+        {
+            // if accessing card's PROM space, and the card's devSel flag is on, swap out XROM
+            int slot = (address >> 8) & 0xF;
+            if(peripherals[slot].devSel && !peripherals[slot].IOStrobe)
+            {
+                //printf("swapping slot %d XROM for slot %d\n", selectedXROM, slot);
+                // selectedRom has an initial value of 0, so since slot 0's XROM is never used, this is fine
+                peripherals[selectedXROM].IOStrobe = 0; // deactivate previous card so it'll pass this check again next time it's used
+                memcpy(peripherals[selectedXROM].expansionRom, memory + 0xC800, 0x800);
+                memcpy(memory + 0xC800, peripherals[slot].expansionRom, 0x800);
+                selectedXROM = slot;
+                peripherals[slot].IOStrobe = 1;
+            }
+        }
+        else if(address == 0xCFFF)
+        {
+            // all other addresses in XROM space are treated normally because the contents of the
+            // selected XROM are copied into the normal memory array above
+            //printf("turning off all cards' devSel\n");
+            for(int card = 1; card < 8; card++)
+            {
+                peripherals[card].devSel = 0;
+            }
         }
     }
 }
@@ -188,10 +202,12 @@ unsigned char readByte(unsigned short address)
     WaitForSingleObject(memMutex, INFINITE);
 
     ioSelect(address);
+    if(peripherals[0].handle != NULL)
+    {
+        peripherals[0].memRef(address);
+    }
 
     unsigned char ret = memory[address];
-
-    //printf("reading %02X from %04X\n", ret, address);
 
     ReleaseMutex(memMutex);
 
@@ -210,27 +226,10 @@ void writeByte(unsigned short address, unsigned char byte)
     memory[address] = byte;
 
     ioSelect(address);
+    if(peripherals[0].handle != NULL)
+    {
+        peripherals[0].memRef(address);
+    }
 
     ReleaseMutex(memMutex);
-
-    // peripheral card PROM space slots n=1 to 7 each get page $Cn
-    // each card (including 0) also gets 16 GPIO addresses from $C080 to $C0F0
-    // CPU references to $C080 to $C0F0 turn on DEVICE SELECT line for card, turning their flip-flops on
-    // CPU references to page $Cn turn on IO SELECT line for card
-    // card PROM reference to $CFFF will cause all cards to turn their flip-flops off
-    // when CPU executes next instruction in PROM, IO SELECT will be re-enabled
-
-    // 1. access GPIO space to turn on DEVICE SELECT flip flop to partially turn on expansion ROM
-    // 2. access PROM space to turn on IO SELECT line, completely turning on expansion ROM
-    // 3. PROM accesses $CFFF turn turn off all DEVICE SELECT flip-flops
-    // 4. fetching next instruction in PROM re-activates expansion ROM
-    // 5. PROM now has full access to its expansion ROM via address $C800-$CFFF
-
-    // flags DS && IOSelect required to turn on XROM_ACCESS (latch)
-    // then IOSelect && XROM_ACCESS required to access expansion rom for that card
-
-    // TODO combine read and write byte functions, write these flags for each card, write char arrays to hold PROM and XROM for each card, check flags and if address in $C800 to $CFFF to determine which of these arrays to access
-    // TODO IO card hardware will be packaged as a dynamic shared object, and PROM and XROM will be bin files with the same name. object file should have an init function
-    // its init function should create a thread that deals with its GPIO space (address will be assigned to it through init parameter when object is loaded)
-    // use dlopen and dlsym to get pointer to init function
 }

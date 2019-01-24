@@ -44,5 +44,9 @@ recording, this address will be ignored and nothing will happen. When reading fr
 byte pointed to by the cursor will be first inserted to the address and the cursor will be advanced
 automatically.
 
+## Peripheral Cards
+Peripheral cards are described in the "Peripheral Cards" page
+
 ## Other hardware
-The game controllers, speakers, and peripheral card support are not yet implemented.
+The game controllers, speakers, pushbutton inputs and annunciator outputs are not implemented. Memory
+addresses normally allocated to them and the utility strobe (90/79) are useful for general purpose RAM.
