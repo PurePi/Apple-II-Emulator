@@ -146,7 +146,6 @@ static void ioSelect(unsigned short address)
         {
             // game controller strobe
         }
-        // TODO make sure all of this works for using more than 1 card
         else if(address < 0xC100)
         {
             // peripheral card GPIO space, set devSel flag for card or callback if the card is active
