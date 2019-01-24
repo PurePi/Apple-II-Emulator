@@ -94,7 +94,7 @@ firstpg STA $C054       ; switch to first page
         STX COUTHI
         JMP scanin
 
-        ; using peripheral cards in slot 1 and 4 example (both contain the same card)
+*       using peripheral cards in slot 1 and 4 example (both contain the same card)
 
 cardex  STA $C090       ; first need to reference slot 1's GPIO space to select it
         JSR $C100       ; jump to its PROM
