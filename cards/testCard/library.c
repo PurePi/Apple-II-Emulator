@@ -28,12 +28,12 @@ void shutdown()
  * @param value byte contained at the address
  * @return byte to insert at that address
  */
-unsigned char deviceSelect(int which, unsigned char val)
+unsigned char deviceSelect(int which, unsigned char value)
 {
     // we want PROM to tell us which slot this card is in through byte 0 in this example
     if(which == 0)
     {
-        printf("This card is in slot %d\n", val);
+        printf("This card is in slot %d\n", value);
     }
     else if(which == 4)
     {
@@ -42,7 +42,7 @@ unsigned char deviceSelect(int which, unsigned char val)
     }
 
     // we don't want to do anything special to any other bytes in this example, so leave them be
-    return val;
+    return value;
 }
 
 // memRef not needed because this card isn't for slot 0

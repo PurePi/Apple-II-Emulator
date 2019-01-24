@@ -12,413 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fcdd1e6-efe8-497c-8601-88fcddf831b8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../testCard.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../testCardPROM.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../testCardXROM.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../wiki/peripheral cards.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Apple_II_Emulator.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../Apple_II_Emulator.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/.appveyor.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/.appveyor.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/.github/CONTRIBUTING.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/.github/CONTRIBUTING.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/.travis.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/CMake/MacOSXBundleInfo.plist.in" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/CMake/MacOSXBundleInfo.plist.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/CMake/amd64-mingw32msvc.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/CMake/amd64-mingw32msvc.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/CMake/i586-mingw32msvc.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/CMake/i586-mingw32msvc.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/CMake/i686-pc-mingw32.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/CMake/i686-pc-mingw32.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/CMake/i686-w64-mingw32.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/CMake/i686-w64-mingw32.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/CMake/modules/FindMir.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/CMake/modules/FindMir.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/CMake/modules/FindVulkan.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/CMake/modules/FindVulkan.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/CMake/modules/FindWaylandProtocols.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/CMake/modules/FindWaylandProtocols.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/CMake/modules/FindXKBCommon.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/CMake/modules/FindXKBCommon.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/CMake/x86_64-w64-mingw32.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/CMake/x86_64-w64-mingw32.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/COPYING.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/COPYING.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/cmake_uninstall.cmake.in" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/cmake_uninstall.cmake.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/KHR/khrplatform.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/KHR/khrplatform.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/getopt.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/getopt.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/getopt.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/getopt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/glad.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/glad.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/glad/glad.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/glad/glad.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/linmath.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/linmath.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/mingw/_mingw_dxhelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/mingw/_mingw_dxhelper.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/mingw/dinput.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/mingw/dinput.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/mingw/xinput.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/mingw/xinput.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/tinycthread.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/tinycthread.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/tinycthread.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/tinycthread.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/vulkan/vk_platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/vulkan/vk_platform.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/deps/vulkan/vulkan.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/deps/vulkan/vulkan.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/Doxyfile.in" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/Doxyfile.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/DoxygenLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/DoxygenLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/build.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/build.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/compat.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/compat.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/compile.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/compile.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/context.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/context.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/extra.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/extra.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/extra.less" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/extra.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/footer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/header.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/annotated.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/annotated.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/arrowdown.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/arrowdown.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/arrowright.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/arrowright.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/bc_s.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/bc_s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/bdwn.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/bdwn.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/bug.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/bug.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/build_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/build_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/build_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/build_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/classes.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/classes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/closed.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/closed.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/compat_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/compat_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/compat_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/compat_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/compile_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/compile_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/compile_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/compile_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/context_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/context_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/context_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/context_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/dir_1f12d41534b9d9c99a183e145b58d6f3.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/dir_1f12d41534b9d9c99a183e145b58d6f3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/dir_351f617146de9499414a6c099ebbe0ca.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/dir_351f617146de9499414a6c099ebbe0ca.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/dir_4bcf8e981abe5adb811ce4f57d70c9af.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/dir_4bcf8e981abe5adb811ce4f57d70c9af.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/doc.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/doc.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/doxygen.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/doxygen.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/doxygen.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/doxygen.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/dynsections.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/dynsections.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/extra.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/extra.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/files.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/files.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/folderclosed.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/folderclosed.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/folderopen.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/folderopen.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/functions.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/functions.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/functions_vars.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/functions_vars.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/glfw3_8h.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/glfw3_8h.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/glfw3_8h_source.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/glfw3_8h_source.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/glfw3native_8h.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/glfw3native_8h.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/glfw3native_8h_source.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/glfw3native_8h_source.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_b.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_b.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_c.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_c.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_d.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_d.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_b.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_b.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_c.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_c.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_d.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_d.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_e.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_e.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_f.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_f.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_g.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_g.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_h.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_h.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_i.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_i.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_j.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_j.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_k.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_k.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_l.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_l.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_m.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_m.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_n.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_n.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_o.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_o.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_p.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_p.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_r.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_r.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_s.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_s.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_t.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_t.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_defs_v.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_defs_v.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_e.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_e.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_f.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_f.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_func.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_func.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_g.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_g.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_h.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_h.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_i.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_i.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_j.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_j.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_k.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_k.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_l.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_l.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_m.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_m.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_n.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_n.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_o.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_o.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_p.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_p.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_r.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_r.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_s.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_s.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_t.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_t.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_type.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_type.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_v.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_v.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/globals_w.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/globals_w.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__buttons.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__buttons.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__context.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__context.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__errors.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__errors.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__init.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__init.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__input.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__input.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__joysticks.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__joysticks.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__keys.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__keys.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__mods.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__mods.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__monitor.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__monitor.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__native.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__native.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__shapes.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__shapes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__vulkan.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__vulkan.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/group__window.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/group__window.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/input_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/input_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/input_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/input_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/intro_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/intro_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/intro_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/intro_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/main_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/main_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/modules.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/modules.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/monitor_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/monitor_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/monitor_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/monitor_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/moving_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/moving_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/moving_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/moving_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/nav_f.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/nav_f.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/nav_g.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/nav_g.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/nav_h.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/nav_h.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/news.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/news.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/news_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/news_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/open.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/open.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/pages.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/pages.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/quick_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/quick_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/quick_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/quick_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_0.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_0.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_1.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_2.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_3.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_4.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_4.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_4.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_5.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_5.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_5.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_6.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_6.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_7.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_7.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_7.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_8.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_8.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_8.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_9.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_9.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_9.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_9.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_a.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_a.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_a.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_a.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_b.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_b.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_b.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_b.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_c.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_c.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_c.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_c.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_d.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_d.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_d.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_d.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_e.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_e.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_e.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_e.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_f.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_f.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/all_f.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/all_f.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/classes_0.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/classes_0.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/classes_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/classes_0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/close.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/close.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/defines_0.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/defines_0.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/defines_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/defines_0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_0.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_0.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_1.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_2.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_3.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_4.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_4.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_4.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_5.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_5.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_5.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_6.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_6.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_7.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_7.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_7.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_8.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_8.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/files_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/files_8.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/functions_0.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/functions_0.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/functions_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/functions_0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_0.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_0.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_1.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_2.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_3.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_4.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_4.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_4.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_5.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_5.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_5.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_6.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_6.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_7.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_7.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_7.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_8.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_8.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_8.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_9.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_9.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/groups_9.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/groups_9.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/mag_sel.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/mag_sel.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/nomatches.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/nomatches.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_0.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_0.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_1.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_2.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_3.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_4.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_4.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_4.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_5.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_5.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_5.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_6.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_6.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_7.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_7.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_7.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_8.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_8.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/pages_8.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/pages_8.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/search.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/search.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/search_l.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/search_l.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/search_m.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/search_m.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/search_r.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/search_r.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/searchdata.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/searchdata.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/typedefs_0.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/typedefs_0.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/typedefs_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/typedefs_0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_0.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_0.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_0.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_0.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_1.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_1.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_2.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_2.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_3.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_3.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_4.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_4.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_4.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_5.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_5.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_5.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_6.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/search/variables_6.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/search/variables_6.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/spaces.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/spaces.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/splitbar.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/splitbar.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/structGLFWgammaramp.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/structGLFWgammaramp.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/structGLFWimage.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/structGLFWimage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/structGLFWvidmode.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/structGLFWvidmode.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/sync_off.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/sync_off.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/sync_on.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/sync_on.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/tab_a.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/tab_a.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/tab_b.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/tab_b.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/tab_h.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/tab_h.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/tab_s.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/tab_s.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/tabs.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/tabs.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/vulkan_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/vulkan_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/vulkan_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/vulkan_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/window_8dox.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/window_8dox.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/html/window_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/html/window_guide.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/input.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/input.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/internal.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/internal.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/intro.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/intro.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/main.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/main.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/monitor.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/monitor.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/moving.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/moving.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/news.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/news.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/quick.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/quick.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/spaces.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/spaces.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/vulkan.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/vulkan.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/docs/window.dox" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/docs/window.dox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/examples/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/examples/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/examples/boing.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/examples/boing.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/examples/gears.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/examples/gears.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/examples/glfw.icns" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/examples/glfw.icns" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/examples/glfw.ico" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/examples/glfw.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/examples/glfw.rc" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/examples/glfw.rc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/examples/heightmap.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/examples/heightmap.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/examples/particles.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/examples/particles.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/examples/simple.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/examples/simple.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/examples/splitview.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/examples/splitview.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/examples/wave.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/examples/wave.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/include/GLFW/glfw3.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/include/GLFW/glfw3.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/include/GLFW/glfw3native.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/include/GLFW/glfw3native.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/cocoa_init.m" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/cocoa_init.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/cocoa_joystick.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/cocoa_joystick.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/cocoa_joystick.m" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/cocoa_joystick.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/cocoa_monitor.m" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/cocoa_monitor.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/cocoa_platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/cocoa_platform.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/cocoa_time.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/cocoa_time.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/cocoa_window.m" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/cocoa_window.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/context.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/context.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/egl_context.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/egl_context.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/egl_context.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/egl_context.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/glfw3.pc.in" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/glfw3.pc.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/glfw3Config.cmake.in" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/glfw3Config.cmake.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/glfw_config.h.in" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/glfw_config.h.in" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/glx_context.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/glx_context.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/glx_context.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/glx_context.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/init.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/init.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/input.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/input.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/internal.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/internal.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/linux_joystick.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/linux_joystick.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/linux_joystick.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/linux_joystick.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/mir_init.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/mir_init.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/mir_monitor.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/mir_monitor.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/mir_platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/mir_platform.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/mir_window.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/mir_window.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/monitor.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/monitor.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/nsgl_context.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/nsgl_context.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/nsgl_context.m" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/nsgl_context.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/posix_time.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/posix_time.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/posix_time.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/posix_time.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/posix_tls.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/posix_tls.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/posix_tls.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/posix_tls.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/vulkan.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/vulkan.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/wgl_context.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/wgl_context.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/wgl_context.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/wgl_context.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/win32_init.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/win32_init.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/win32_joystick.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/win32_joystick.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/win32_joystick.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/win32_joystick.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/win32_monitor.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/win32_monitor.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/win32_platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/win32_platform.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/win32_time.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/win32_time.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/win32_tls.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/win32_tls.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/win32_window.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/win32_window.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/window.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/window.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/wl_init.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/wl_init.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/wl_monitor.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/wl_monitor.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/wl_platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/wl_platform.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/wl_window.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/wl_window.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/x11_init.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/x11_init.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/x11_monitor.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/x11_monitor.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/x11_platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/x11_platform.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/x11_window.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/x11_window.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/xkb_unicode.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/xkb_unicode.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/src/xkb_unicode.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/src/xkb_unicode.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/clipboard.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/clipboard.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/cursor.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/cursor.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/empty.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/empty.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/events.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/events.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/gamma.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/gamma.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/glfwinfo.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/glfwinfo.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/icon.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/icon.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/iconify.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/iconify.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/joysticks.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/joysticks.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/monitors.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/monitors.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/msaa.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/msaa.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/reopen.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/reopen.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/sharing.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/sharing.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/tearing.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/tearing.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/threads.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/threads.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/timeout.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/timeout.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/title.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/title.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/vulkan.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/vulkan.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/GLFW/tests/windows.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/GLFW/tests/windows.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Dependencies/libjsmn.a" beforeDir="false" afterPath="$PROJECT_DIR$/../../dependencies/libjsmn.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../test2PROM.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../test2XROM.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rom/rom.asm" beforeDir="false" afterPath="$PROJECT_DIR$/../../rom/rom.asm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rom/rom.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../../rom/rom.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rom/rom_listing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../rom/rom_listing.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rom/vectors.asm" beforeDir="false" afterPath="$PROJECT_DIR$/../../rom/vectors.asm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../rom/vectors_listing.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../rom/vectors_listing.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/HIF.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/HIF.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/cpu.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/cpu.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/memory.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/memory.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/peripheral.c" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/peripheral.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/peripheral.h" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/peripheral.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../wiki/hardware.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../wiki/hardware.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/library.c" beforeDir="false" afterPath="$PROJECT_DIR$/library.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -454,6 +48,7 @@
     <session id="1254709126">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
@@ -473,14 +68,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="asm" value="838" />
-          <entry key="c" value="1511" />
+          <entry key="c" value="1518" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Assembly File" value="838" />
           <entry key="Doxygen file" value="15" />
-          <entry key="ObjectiveC" value="1496" />
+          <entry key="ObjectiveC" value="1503" />
         </counts>
       </usages-collector>
     </session>
@@ -490,8 +85,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/library.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="32" column="88" selection-start-line="32" selection-start-column="88" selection-end-line="32" selection-end-column="88" />
+            <state relative-caret-position="704">
+              <caret line="44" column="16" selection-start-line="44" selection-start-column="16" selection-end-line="44" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -618,15 +213,16 @@
       <updated>1548186176356</updated>
       <workItem from="1548186178099" duration="1496000" />
       <workItem from="1548266618712" duration="351000" />
-      <workItem from="1548267017059" duration="9831000" />
+      <workItem from="1548267017059" duration="9855000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11678000" />
+    <option name="totallyTimeSpent" value="11702000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10660981" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -708,8 +304,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/library.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="32" column="88" selection-start-line="32" selection-start-column="88" selection-end-line="32" selection-end-column="88" />
+        <state relative-caret-position="704">
+          <caret line="44" column="16" selection-start-line="44" selection-start-column="16" selection-end-line="44" selection-end-column="16" />
         </state>
       </provider>
     </entry>
