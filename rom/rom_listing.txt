@@ -1,4 +1,4 @@
-                     * listing for rom.asm generated on 2019-1-27 at 19:13:51
+                     * listing for rom.asm generated on 2019-1-28 at 00:05:39
 
 FA00:              1         ORG $FA00       ; we know this code will be loaded into address $FA00, and the reset vector points here
 FA00:              2 
@@ -12,7 +12,7 @@ FA00:              9 COUTHI  EQU $06
 FA00:             10 PAGE1Y  EQU $07         ; keep track of Y position on first page
 FA00:             11 PAGE2Y  EQU $08         ; keep track of Y position on second page
 FA00:             12 
-FA00:  4C 36 FA   13         JMP kbdex       ; jump to an example
+FA00:  4C A3 FA   13         JMP hires       ; jump to an example
 FA03:             14 
 FA03:             15 *       writing to screen example
 FA03:             16 
@@ -22,7 +22,7 @@ FA03:             19 ROW1H   EQU $04         ; high byte of rows 1 and 2
 FA03:             20 ROW3H   EQU $05         ; high byte of rows 3 and 4
 FA03:             21 PG2H    EQU $08         ; high byte of screen page 2 (first row)
 FA03:             22 
-FA03:  A9 A0      23 printex LDA #$A0        ; start at first normal character
+FA03:  A9 A0      23 print   LDA #$A0        ; start at first normal character
 FA05:  A0 00      24         LDY #$00        ; index in row to place char
 FA07:  A2 04      25         LDX #ROW1H      ; put address of row into COUTLO, COUTHI
 FA09:  86 06      26         STX COUTHI
@@ -51,7 +51,7 @@ FA35:  60         48         RTS
 FA36:             49 
 FA36:             50 *       print keyboard input onto screen example
 FA36:             51 
-FA36:  A0 00      52 kbdex   LDY #$00        ; set up screen output the same way as above example
+FA36:  A0 00      52 kbd     LDY #$00        ; set up screen output the same way as above example
 FA38:  A2 04      53         LDX #ROW1H
 FA3A:  86 06      54         STX COUTHI
 FA3C:  A2 00      55         LDX #ODDROWL
@@ -88,34 +88,96 @@ FA7D:  A4 07      85         LDY PAGE1Y
 FA7F:  A2 04      86         LDX #ROW1H
 FA81:  86 06      87         STX COUTHI
 FA83:  4C 40 FA   88         JMP undersc
-FA86:             89 *       using peripheral cards in slot 1 and 4 example (both contain the same card)
-FA86:             90 
-FA86:  8D 90 C0   91 cardex  STA $C090       ; first need to reference slot 1's GPIO space to select it
-FA89:  20 00 C1   92         JSR $C100       ; jump to its PROM
-FA8C:  8D C4 C0   93         STA $C0C4       ; now let's use slot 4 (can reference any byte in its GPIO space, not only byte 0)
-FA8F:  20 00 C4   94         JSR $C400
-FA92:  8D 90 C0   95         STA $C090       ; and slot 1 again (remember that this first reference does not trigger its callback, only enables it)
-FA95:  20 00 C1   96         JSR $C100
-FA98:  02         97         HCF
-FA99:             98 
-FA99:             99 *       ROM subroutines
-FA99:            100 
-FA99:  85 00     101 SAVE    STA ACC
-FA9B:  86 01     102         STX XREG
-FA9D:  84 02     103         STY YREG
-FA9F:  08        104         PHP
-FAA0:  68        105         PLA
-FAA1:  85 03     106         STA STATUS
-FAA3:  BA        107         TSX
-FAA4:  86 04     108         STX SPTR
-FAA6:  D8        109         CLD
-FAA7:  60        110         RTS
-FAA8:  A5 03     111 RESTORE LDA STATUS
-FAAA:  48        112         PHA
-FAAB:  A5 00     113         LDA ACC
-FAAD:  A6 01     114         LDX XREG
-FAAF:  A4 02     115         LDY YREG
-FAB1:  28        116         PLP
-FAB2:  60        117         RTS
+FA86:             89 
+FA86:  A0 00      90 lores   LDY #$00
+FA88:  A2 04      91         LDX #ROW1H
+FA8A:  86 06      92         STX COUTHI
+FA8C:  A2 00      93         LDX #ODDROWL
+FA8E:  86 05      94         STX COUTLO
+FA90:  A9 00      95         LDA #$00
+FA92:  8D 50 C0   96         STA $C050       ; switch to graphics mode
+FA95:  8D 56 C0   97         STA $C056       ; set lo-res
+FA98:  18         98 loloop  CLC
+FA99:  91 05      99         STA (COUTLO),Y
+FA9B:  69 01     100         ADC #$01
+FA9D:  C8        101         INY
+FA9E:  C9 28     102         CMP #$28
+FAA0:  D0 F6     103         BNE loloop
+FAA2:  02        104         HCF
+FAA3:            105 
+FAA3:            106 HIPG1L  EQU $00
+FAA3:            107 HIPG1H  EQU $20
+FAA3:            108 
+FAA3:  A0 00     109 hires   LDY #$00
+FAA5:  A2 20     110         LDX #HIPG1H
+FAA7:  86 06     111         STX COUTHI
+FAA9:  A2 00     112         LDX #HIPG1L
+FAAB:  86 05     113         STX COUTLO
+FAAD:  8D 50 C0  114         STA $C050       ; switch to graphics mode (hi res already set from cold start)
+FAB0:  91 05     115         STA (COUTLO),Y  ; just placing a few random colors
+FAB2:  A9 12     116         LDA #%00010010
+FAB4:  C8        117         INY
+FAB5:  91 05     118         STA (COUTLO),Y
+FAB7:  A9 01     119         LDA #%00000001  ; MSb is palette, then pairs from LSb determine color
+FAB9:  C8        120         INY
+FABA:  91 05     121         STA (COUTLO),Y
+FABC:  A9 27     122         LDA #%00100111  ; palette = 0, %00 = black, %01 = green, %10 = violet, %11 = white
+FABE:  C8        123         INY
+FABF:  91 05     124         STA (COUTLO),Y
+FAC1:  A9 09     125         LDA #%00001001  ; bit 6 is ignored
+FAC3:  C8        126         INY
+FAC4:  91 05     127         STA (COUTLO),Y
+FAC6:  A9 3F     128         LDA #%00111111  ; note that LSb is leftmost pixel
+FAC8:  C8        129         INY
+FAC9:  91 05     130         STA (COUTLO),Y
+FACB:  A9 3B     131         LDA #%00111011
+FACD:  C8        132         INY
+FACE:  91 05     133         STA (COUTLO),Y
+FAD0:  A9 A5     134         LDA #%10100101  ; palette = 1, %00 = black, %01 = orange, %10 = blue, %11 = white
+FAD2:  C8        135         INY
+FAD3:  91 05     136         STA (COUTLO),Y
+FAD5:  A9 B6     137         LDA #%10110110
+FAD7:  C8        138         INY
+FAD8:  91 05     139         STA (COUTLO),Y
+FADA:  A9 8C     140         LDA #%10001100
+FADC:  C8        141         INY
+FADD:  91 05     142         STA (COUTLO),Y
+FADF:  A9 A1     143         LDA #%10100001
+FAE1:  C8        144         INY
+FAE2:  91 05     145         STA (COUTLO),Y
+FAE4:  8D 53 C0  146         STA $C053       ; enable mixed mode
+FAE7:  A9 C1     147         LDA #$C1        ; place an 'A' at the first location for text captions
+FAE9:  8D 50 06  148         STA $0650
+FAEC:  02        149         HCF
+FAED:            150 
+FAED:            151 *       using peripheral cards in slot 1 and 4 example (both contain the same card)
+FAED:            152 
+FAED:  8D 90 C0  153 card    STA $C090       ; first need to reference slot 1's GPIO space to select it
+FAF0:  20 00 C1  154         JSR $C100       ; jump to its PROM
+FAF3:  8D C4 C0  155         STA $C0C4       ; now let's use slot 4 (can reference any byte in its GPIO space, not only byte 0)
+FAF6:  20 00 C4  156         JSR $C400
+FAF9:  8D 90 C0  157         STA $C090       ; and slot 1 again (remember that this first reference does not trigger its callback, only enables it)
+FAFC:  20 00 C1  158         JSR $C100
+FAFF:  02        159         HCF
+FB00:            160 
+FB00:            161 *       ROM subroutines
+FB00:            162 
+FB00:  85 00     163 SAVE    STA ACC
+FB02:  86 01     164         STX XREG
+FB04:  84 02     165         STY YREG
+FB06:  08        166         PHP
+FB07:  68        167         PLA
+FB08:  85 03     168         STA STATUS
+FB0A:  BA        169         TSX
+FB0B:  86 04     170         STX SPTR
+FB0D:  D8        171         CLD
+FB0E:  60        172         RTS
+FB0F:  A5 03     173 RESTORE LDA STATUS
+FB11:  48        174         PHA
+FB12:  A5 00     175         LDA ACC
+FB14:  A6 01     176         LDX XREG
+FB16:  A4 02     177         LDY YREG
+FB18:  28        178         PLP
+FB19:  60        179         RTS
 
-                     * Assembled 179 bytes
+                     * Assembled 282 bytes

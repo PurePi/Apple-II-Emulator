@@ -5,20 +5,53 @@ Page numbers in the form `(pdf/document)` will be pointed out to find more infor
 
 ## Display
 The display is 560x384 pixels, but the resolution is still the original 280x192 "dots". The initial setting
-of the monitor is text mode, display all text or graphics, display primary page, and display low-res
-graphics (90/79) At the moment, only text mode is implemented, although the soft switches are also
-implemented. If switching graphics modes, nothing will be displayed until the text mode switch is set.
-Characters on the text pages are interpreted as ASCII rather than the codes and display modes supported by
-the original Apple ][ (26/15). These features will be implemented eventually.
+of the monitor is text mode, display all text or graphics, display primary page, and display hi-res
+graphics. There are 8 different soft switches to control these settings (90/79). Each display mode has two
+pages to display, and soft switches to choose which gets displayed. For text and low resolution mode, page 1
+is in the range $0400-$07FF in memory, and page 2 is in the range $0800-$0BFF. For high resolution mode, the
+pages are located at $2000-$3FFF and $4000-$5FFF. 
 
-Each display mode has two pages to display, and soft switches to choose which gets displayed. For text and
-low resolution mode, page 1 is in the range $0400-$07FF in memory, and page 2 is in the range $0800-$0BFF.
-The exact addresses of each character to display is shown on page 27/16 of the reference manual.
+In text mode, the values at certain locations on the page produce a character on the screen. The exact
+address and location of each character to display is shown on page 27/16 of the reference manual. To
+understand the layout more easily, imagine that the screen is split into 3 horizontal sections, and the
+page is dealing 24 40-character rows to them. After dealing to the third section each time, the last 8 bytes
+of each 128 bytes are discarded, then it continues to give a 40-character row to the first section. In the
+end, each section gets 8 rows.
+
+In low resolution mode, the same pages are interpreted to produce colored blocks at a resolution 40 blocks
+wide and 48 tall. Each byte represents two blocks, where the lower 4 bits are the upper block and vice versa.
+The colors and memory map are given on page 28/17.
+
+In high resolution mode, the bytes on its pages are interpreted as 3 colored 1x2 dot blocks each. Bits 1:0
+determine the leftmost block's color, bits 3:2 the middle block's, and bits 5:4 the rightmost block's. Bit 6
+is ignored. Bit 7 determines the palette from which to select the color. Each row is represented by 40 bytes
+(30/19).
+
+| Palette | Block | Color  |
+|---------|-------|--------|
+| 0 or 1  | %00   | black  |
+| 0 or 1  | %11   | white  |
+| 0       | %01   | green  |
+| 0       | %10   | violet |
+| 1       | %01   | orange |
+| 1       | %10   | blue   |
+
+While in either graphics mode, mixed graphics and text may be selected. This will interpret and display the
+last 4 rows of the text page. If displaying page 2 in high resolution, page 2 of text mode will be interpreted.
+The address of these last 4 rows are the same as on page 27/16.
 
 ## Keyboard
 When pressing a key, the ASCII code for that key, combined with the highest bit (input flag) set, will be
-placed in all memory addresses from $C000 to $C00F for the software to read. When referencing a memory
-address between $C010 and $C01F, the input flag will be set to 0 (89/78) (17/6).
+placed in all memory addresses from $C000 to $C00F for the software to read. This nunmber may be placed
+directy on the screen when in text mode to produce the character. Removing the highest bit will produce a
+flashing character, and further subtracting $40 will produce an inverse character. Holding shift while
+pressing a letter key makes no difference because all leters oln the original Apple ][ were uppercase.
+Holding control while pressing a letter will produce a different, but still printable, number. The N and P
+keys are unique because they produced the ^ and @ characters when holding shift, and holding ctrl+shift
+while pressing them produced a unique code. In my implementation, holding shift with these numbers makes no
+difference because @ and ^ are located on different keys, but holding ctrl and ctrl+shift produces the
+original codes. The table on page 18/7 shows the exact values produced by the keys. When referencing a
+memory address between $C010 and $C01F, the input flag will be set to 0 (89/78) (17/6).
 
 ## Cassette Recorder
 The cassette recorder is implemented as an interface for file I/O. The original cassette interface used a

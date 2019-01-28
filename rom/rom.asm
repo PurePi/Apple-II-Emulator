@@ -10,7 +10,7 @@ COUTHI  EQU $06
 PAGE1Y  EQU $07         ; keep track of Y position on first page
 PAGE2Y  EQU $08         ; keep track of Y position on second page
 
-        JMP kbdex       ; jump to an example
+        JMP hires       ; jump to an example
 
 *       writing to screen example
 
@@ -20,7 +20,7 @@ ROW1H   EQU $04         ; high byte of rows 1 and 2
 ROW3H   EQU $05         ; high byte of rows 3 and 4
 PG2H    EQU $08         ; high byte of screen page 2 (first row)
 
-printex LDA #$A0        ; start at first normal character
+print   LDA #$A0        ; start at first normal character
         LDY #$00        ; index in row to place char
         LDX #ROW1H      ; put address of row into COUTLO, COUTHI
         STX COUTHI
@@ -49,7 +49,7 @@ outloop STA (COUTLO),Y  ; store character at row base address + Y
 
 *       print keyboard input onto screen example
 
-kbdex   LDY #$00        ; set up screen output the same way as above example
+kbd     LDY #$00        ; set up screen output the same way as above example
         LDX #ROW1H
         STX COUTHI
         LDX #ODDROWL
@@ -86,9 +86,71 @@ firstpg STA $C054       ; switch to first page
         LDX #ROW1H
         STX COUTHI
         JMP undersc
+
+lores   LDY #$00
+        LDX #ROW1H
+        STX COUTHI
+        LDX #ODDROWL
+        STX COUTLO
+        LDA #$00
+        STA $C050       ; switch to graphics mode
+        STA $C056       ; set lo-res
+loloop  CLC
+        STA (COUTLO),Y
+        ADC #$01
+        INY
+        CMP #$28
+        BNE loloop
+        HCF
+
+HIPG1L  EQU $00
+HIPG1H  EQU $20
+
+hires   LDY #$00
+        LDX #HIPG1H
+        STX COUTHI
+        LDX #HIPG1L
+        STX COUTLO
+        STA $C050       ; switch to graphics mode (hi res already set from cold start)
+        STA (COUTLO),Y  ; just placing a few random colors
+        LDA #%00010010
+        INY
+        STA (COUTLO),Y
+        LDA #%00000001  ; MSb is palette, then pairs from LSb determine color
+        INY
+        STA (COUTLO),Y
+        LDA #%00100111  ; palette = 0, %00 = black, %01 = green, %10 = violet, %11 = white
+        INY
+        STA (COUTLO),Y
+        LDA #%00001001  ; bit 6 is ignored
+        INY
+        STA (COUTLO),Y
+        LDA #%00111111
+        INY
+        STA (COUTLO),Y
+        LDA #%00111011  ; note that LSb is leftmost pixel
+        INY
+        STA (COUTLO),Y
+        LDA #%10100101  ; palette = 1, %00 = black, %01 = orange, %10 = blue, %11 = white
+        INY
+        STA (COUTLO),Y
+        LDA #%10110110
+        INY
+        STA (COUTLO),Y
+        LDA #%10001100
+        INY
+        STA (COUTLO),Y
+        LDA #%10100001
+        INY
+        STA (COUTLO),Y
+        STA $C053       ; enable mixed mode
+        LDA #$C1        ; place an 'A' at the first location for text captions
+        STA $0650
+        HCF
+
 *       using peripheral cards in slot 1 and 4 example (both contain the same card)
 
-cardex  STA $C090       ; first need to reference slot 1's GPIO space to select it
+card    STA $C090       ; first need to reference slot 1's GPIO space to select it
         JSR $C100       ; jump to its PROM
         STA $C0C4       ; now let's use slot 4 (can reference any byte in its GPIO space, not only byte 0)
         JSR $C400

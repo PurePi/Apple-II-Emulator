@@ -51,6 +51,8 @@ int main()
 
     reset();
 
+    Sleep(500);
+
     switch(startGLFW())
     {
     case 1:

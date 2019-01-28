@@ -11,7 +11,7 @@
 
 char running = 0;
 char screenFlagsChanged = 0;
-char screenFlags = pri | lores; // TODO change this back to hires when done testing lores
+char screenFlags = pri;
 
 unsigned short pageBase = 0x0400;
 unsigned short pageEnd = 0x0BFF;
@@ -19,12 +19,11 @@ unsigned short pageEnd = 0x0BFF;
 static GLFWwindow *window;
 
 // bitmaps to draw on the screen
-static char lopage1[7680] = { 0 };
-static char lopage2[7680] = { 0 };
-static char hipage1[7680] = { 0 };
-static char hipage2[7680] = { 0 };
+static unsigned char lopage[7680] = { 0 };
+static unsigned char hipage[8192] = { 0 };
 
 // to keep the chars in the current page while in text mode, flashing characters may be turned to whitespace
+// or to be interpreted directly while in lores mode
 static unsigned char characters[0x400] = { 0 };
 // to preserve all chars on the screen in order to put flashing characters back onto the screen
 static unsigned char saveChars[0x400] = { 0 };
@@ -36,7 +35,47 @@ static char showing = 1;
 #define FLASHING 0b01
 #define INVERSE 0b10
 
-// to blink every second, gets decremented each frame
+// low res color palette in RGBA order
+static const unsigned char loColors[16][4] =
+        {
+        [0]     = { 0x00, 0x00, 0x00, 0xFF },
+        [1]     = { 0xFF, 0x00, 0x00, 0xFF },
+        [2]     = { 0x44, 0x05, 0xDA, 0xFF },
+        [3]     = { 0xCA, 0x14, 0xFF, 0xFF },
+        [4]     = { 0x00, 0x72, 0x10, 0xFF },
+        [5]     = { 0x7F, 0x7F, 0x7F, 0xFF },
+        [6]     = { 0x23, 0x97, 0xFE, 0xFF },
+        [7]     = { 0xA9, 0xA2, 0xFF, 0xFF },
+        [8]     = { 0x52, 0x51, 0x01, 0xFF },
+        [9]     = { 0xF0, 0x5D, 0x00, 0xFF },
+        [10]    = { 0xBE, 0xBE, 0xBE, 0xFF },
+        [11]    = { 0xFF, 0x85, 0xE0, 0xFF },
+        [12]    = { 0x12, 0xCA, 0x08, 0xFF },
+        [13]    = { 0xD0, 0xD2, 0x15, 0xFF },
+        [14]    = { 0x51, 0xF5, 0x96, 0xFF },
+        [15]    = { 0xFF, 0xFF, 0xFF, 0xFF },
+        };
+
+// hi res color palette, 1st dimension = palette bit is 0 or 1
+static const unsigned char hiColors[2][4][4] =
+        {
+        [0] =
+                {
+                [0] = { 0x00, 0x00, 0x00, 0x00 },
+                [1] = { 0x6F, 0xB2, 0x0A, 0xFF },
+                [2] = { 0xF5, 0x53, 0xD7, 0xFF },
+                [3] = { 0xFF, 0xFF, 0xFF, 0xFF }
+                },
+        [1] =
+                {
+                [0] = { 0x00, 0x00, 0x00, 0x00 },
+                [1] = { 0xF1, 0x7D, 0x10, 0xFF },
+                [2] = { 0x38, 0x37, 0xFF, 0xFF },
+                [3] = { 0xFF, 0xFF, 0xFF, 0xFF }
+                }
+        };
+
+// to blink twice every second, gets decremented each frame
 static int flashTimer = 30;
 
 static void (*fillBuffer)();
@@ -48,12 +87,11 @@ static void (*fillBuffer)();
  * @param character the character to draw
  * @param flag the flags for that char
  */
-static void insertChar(int page, int startAt, char character, unsigned char flag)
+static void insertChar(int startAt, char character, unsigned char flag)
 {
     unsigned char r0 = 0, r1 = 0, r2 = 0, r3 = 0, r4 = 0,
             r5 = 0, r6 = 0, r7 = 0;
 
-    // TODO refactor to draw chars from $00-$3F
     switch(character)
     {
     case 0x00: // @
@@ -570,28 +608,14 @@ static void insertChar(int page, int startAt, char character, unsigned char flag
         break;
     }
 
-    if(page == 1)
-    {
-        lopage1[startAt] = flag & INVERSE ? ~r0 : r0;
-        lopage1[startAt+40] = flag & INVERSE ? ~r1 : r1;
-        lopage1[startAt+80] = flag & INVERSE ? ~r2 : r2;
-        lopage1[startAt+120] = flag & INVERSE ? ~r3 : r3;
-        lopage1[startAt+160] = flag & INVERSE ? ~r4 : r4;
-        lopage1[startAt+200] = flag & INVERSE ? ~r5 : r5;
-        lopage1[startAt+240] = flag & INVERSE ? ~r6 : r6;
-        lopage1[startAt+280] = flag & INVERSE ? ~r7 : r7;
-    }
-    else
-    {
-        lopage2[startAt] = flag & INVERSE ? ~r0 : r0;
-        lopage2[startAt+40] = flag & INVERSE ? ~r1 : r1;
-        lopage2[startAt+80] = flag & INVERSE ? ~r2 : r2;
-        lopage2[startAt+120] = flag & INVERSE ? ~r3 : r3;
-        lopage2[startAt+160] = flag & INVERSE ? ~r4 : r4;
-        lopage2[startAt+200] = flag & INVERSE ? ~r5 : r5;
-        lopage2[startAt+240] = flag & INVERSE ? ~r6 : r6;
-        lopage2[startAt+280] = flag & INVERSE ? ~r7 : r7;
-    }
+    lopage[startAt] = flag & INVERSE ? ~r0 : r0;
+    lopage[startAt+40] = flag & INVERSE ? ~r1 : r1;
+    lopage[startAt+80] = flag & INVERSE ? ~r2 : r2;
+    lopage[startAt+120] = flag & INVERSE ? ~r3 : r3;
+    lopage[startAt+160] = flag & INVERSE ? ~r4 : r4;
+    lopage[startAt+200] = flag & INVERSE ? ~r5 : r5;
+    lopage[startAt+240] = flag & INVERSE ? ~r6 : r6;
+    lopage[startAt+280] = flag & INVERSE ? ~r7 : r7;
 }
 
 /**
@@ -600,8 +624,8 @@ static void insertChar(int page, int startAt, char character, unsigned char flag
 static void decodeChars()
 {
     // The screen is split up into 3 sections of 8 rows each
-    // going through the page is like dealing 24 cards to 3 players, but each card is one 40-character row
-    // and the last 8 bytes of every 0x80 byte section is ignored
+    // going through the page is like dealing 24 40-character rows to the 3 sections
+    // and after each pass the last 8 bytes of every 128 byte section is ignored
     for(unsigned short base = 0x0; base < 0x400; base += 0x80)
     {
         for(unsigned short ch = 0; ch < 0x28; ch++)
@@ -620,7 +644,7 @@ static void decodeChars()
                 }
             }
 
-            insertChar(screenFlags & pri ? 1 : 2, ((base) * 5) / 2 + ch, (char) (characters[base + ch] % 0x40), charFlags[base + ch]);
+            insertChar(((base) * 5) / 2 + ch, (char) (characters[base + ch] % 0x40), charFlags[base + ch]);
         }
     }
     for(unsigned short base = 0x28; base < 0x400; base += 0x80)
@@ -641,7 +665,7 @@ static void decodeChars()
                 }
             }
 
-            insertChar(screenFlags & pri ? 1 : 2, ((base - 0x28) * 5) / 2 + ch + 2560, (char) (characters[base + ch] % 0x40), charFlags[base + ch]);
+            insertChar(((base - 0x28) * 5) / 2 + ch + 2560, (char) (characters[base + ch] % 0x40), charFlags[base + ch]);
         }
     }
     for(unsigned short base = 0x50; base < 0x400; base += 0x80)
@@ -662,7 +686,7 @@ static void decodeChars()
                 }
             }
 
-            insertChar(screenFlags & pri ? 1 : 2, ((base - 0x50) * 5) / 2 + ch + 5120, (char) (characters[base + ch] % 0x40), charFlags[base + ch]);
+            insertChar(((base - 0x50) * 5) / 2 + ch + 5120, (char) (characters[base + ch] % 0x40), charFlags[base + ch]);
         }
     }
 }
@@ -697,7 +721,20 @@ static void textMode()
  */
 static void loResMode()
 {
+    WaitForSingleObject(memMutex, INFINITE);
+    WaitForSingleObject(screenMutex, INFINITE);
 
+    if(screenFlags & pri)
+    {
+        memcpy(characters, memory + 0x400, 0x400);
+    }
+    else
+    {
+        memcpy(characters, memory + 0x800, 0x400);
+    }
+
+    ReleaseMutex(memMutex);
+    ReleaseMutex(screenMutex);
 }
 
 /**
@@ -705,7 +742,20 @@ static void loResMode()
  */
 static void hiResMode()
 {
+    WaitForSingleObject(memMutex, INFINITE);
+    WaitForSingleObject(screenMutex, INFINITE);
 
+    if(screenFlags & pri)
+    {
+        memcpy(hipage, memory + 0x2000, 0x2000);
+    }
+    else
+    {
+        memcpy(hipage, memory + 0x4000, 0x2000);
+    }
+
+    ReleaseMutex(memMutex);
+    ReleaseMutex(screenMutex);
 }
 
 /**
@@ -721,13 +771,199 @@ static void drawScreen()
             for(int shift = 0; shift < 8; shift++)
             {
                 // leftmost pixel is bit 6
-                if(((screenFlags & pri ? lopage1[byte] : lopage2[byte]) & (0b10000000 >> shift)) != 0)
+                if((lopage[byte] & (0b10000000 >> shift)) != 0)
                 {
                     // TODO maybe revisit this
                     int leftCoord = (((byte * 7 + shift) % 280) * 2);
                     int upCoord = (((byte * 7 + shift) / 280) * 2);
                     glRectf(((leftCoord - 2) / 280.0f) - 1, -(((upCoord) / 192.0f) - 1), (leftCoord) / 280.0f - 1,
                             -((upCoord + 2) / 192.0f - 1));
+                }
+            }
+        }
+    }
+    else
+    {
+        if(screenFlags & lores)
+        {
+            for(unsigned short base = 0x0; base < 0x400; base += 0x80)
+            {
+                for(unsigned short ch = 0; ch < 0x28; ch++)
+                {
+                    const unsigned char *color = loColors[characters[base + ch] & 0xF];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    // first lower nybble
+                    int leftCoord = (((base + ch) % 40) * 2);
+                    int upCoord = (((base + ch) / 40) * 2);
+                    glRectf(((leftCoord) / 40.0f) - 1, -(((upCoord) / 48.0f) - 1), (leftCoord + 2) / 40.0f - 1,
+                            -((upCoord + 2) / 48.0f - 1));
+
+                    // then upper nybble
+                    color = loColors[characters[base + ch] >> 4];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    glRectf(((leftCoord) / 40.0f) - 1, -(((upCoord + 2) / 48.0f) - 1), (leftCoord + 2) / 40.0f - 1,
+                            -((upCoord + 4) / 48.0f - 1));
+                }
+            }
+            for(unsigned short base = 0x28; base < 0x400; base += 0x80)
+            {
+                for(unsigned short ch = 0; ch < 0x28; ch++)
+                {
+                    const unsigned char *color = loColors[characters[base + ch] & 0xF];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    int leftCoord = (((base + ch) % 40) * 2);
+                    int upCoord = (((base + ch) / 40) * 2);
+                    glRectf(((leftCoord) / 40.0f) - 1, -(((upCoord) / 48.0f) - 1), (leftCoord + 2) / 40.0f - 1,
+                            -((upCoord + 2) / 48.0f - 1));
+
+                    color = loColors[characters[base + ch] >> 4];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    glRectf(((leftCoord) / 40.0f) - 1, -(((upCoord + 2) / 48.0f) - 1), (leftCoord + 2) / 40.0f - 1,
+                            -((upCoord + 4) / 48.0f - 1));
+                }
+            }
+            for(unsigned short base = 0x50; base < 0x400; base += 0x80)
+            {
+                for(unsigned short ch = 0; ch < 0x28; ch++)
+                {
+                    const unsigned char *color = loColors[characters[base + ch] & 0xF];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    int leftCoord = (((base + ch) % 40) * 2);
+                    int upCoord = (((base + ch) / 40) * 2);
+                    glRectf(((leftCoord) / 40.0f) - 1, -(((upCoord) / 48.0f) - 1), (leftCoord + 2) / 40.0f - 1,
+                            -((upCoord + 2) / 48.0f - 1));
+
+                    color = loColors[characters[base + ch] >> 4];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    glRectf(((leftCoord) / 40.0f) - 1, -(((upCoord + 2) / 48.0f) - 1), (leftCoord + 2) / 40.0f - 1,
+                            -((upCoord + 4) / 48.0f - 1));
+                }
+            }
+        }
+        else
+        {
+            for(unsigned short base = 0x0; base < 0x2000; base += 0x80)
+            {
+                for(unsigned short ch = 0; ch < 0x28; ch++)
+                {
+                    const unsigned char *color = hiColors[hipage[base + ch] >> 7][hipage[base + ch] & 0b11];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    int leftCoord = (((base + ch) % 280) * 12);
+                    int upCoord = (((base + ch) / 280) * 2);
+                    glRectf(((leftCoord) / 280.0f) - 1, -(((upCoord) / 192.0f) - 1), (leftCoord + 4) / 280.0f - 1,
+                            -((upCoord + 2) / 192.0f - 1));
+
+                    color = hiColors[hipage[base + ch] >> 7][(hipage[base + ch] >> 2) & 0b11];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    glRectf(((leftCoord + 4) / 280.0f) - 1, -(((upCoord) / 192.0f) - 1), (leftCoord + 8) / 280.0f - 1,
+                            -((upCoord + 2) / 192.0f - 1));
+
+                    color = hiColors[hipage[base + ch] >> 7][(hipage[base + ch] >> 4) & 0b11];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    glRectf(((leftCoord + 8) / 280.0f) - 1, -(((upCoord) / 192.0f) - 1), (leftCoord + 12) / 280.0f - 1,
+                            -((upCoord + 2) / 192.0f - 1));
+                }
+            }
+            for(unsigned short base = 0x28; base < 0x2000; base += 0x80)
+            {
+                for(unsigned short ch = 0; ch < 0x28; ch++)
+                {
+                    const unsigned char *color = hiColors[hipage[base + ch] >> 7][hipage[base + ch] & 0b11];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    int leftCoord = (((base + ch) % 280) * 12);
+                    int upCoord = (((base + ch) / 280) * 2);
+                    glRectf(((leftCoord) / 280.0f) - 1, -(((upCoord) / 192.0f) - 1), (leftCoord + 4) / 280.0f - 1,
+                            -((upCoord + 2) / 192.0f - 1));
+
+                    color = hiColors[hipage[base + ch] >> 7][(hipage[base + ch] >> 2) & 0b11];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    glRectf(((leftCoord + 4) / 280.0f) - 1, -(((upCoord) / 192.0f) - 1), (leftCoord + 8) / 280.0f - 1,
+                            -((upCoord + 2) / 192.0f - 1));
+
+                    color = hiColors[hipage[base + ch] >> 7][(hipage[base + ch] >> 4) & 0b11];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    glRectf(((leftCoord + 8) / 280.0f) - 1, -(((upCoord) / 192.0f) - 1), (leftCoord + 12) / 280.0f - 1,
+                            -((upCoord + 2) / 192.0f - 1));
+                }
+            }
+            for(unsigned short base = 0x50; base < 0x2000; base += 0x80)
+            {
+                for(unsigned short ch = 0; ch < 0x28; ch++)
+                {
+                    const unsigned char *color = hiColors[hipage[base + ch] >> 7][hipage[base + ch] & 0b11];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    int leftCoord = (((base + ch) % 280) * 12);
+                    int upCoord = (((base + ch) / 280) * 2);
+                    glRectf(((leftCoord) / 280.0f) - 1, -(((upCoord) / 192.0f) - 1), (leftCoord + 4) / 280.0f - 1,
+                            -((upCoord + 2) / 192.0f - 1));
+
+                    color = hiColors[hipage[base + ch] >> 7][(hipage[base + ch] >> 2) & 0b11];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    glRectf(((leftCoord + 4) / 280.0f) - 1, -(((upCoord) / 192.0f) - 1), (leftCoord + 8) / 280.0f - 1,
+                            -((upCoord + 2) / 192.0f - 1));
+
+                    color = hiColors[hipage[base + ch] >> 7][(hipage[base + ch] >> 4) & 0b11];
+                    glColor4ub(color[0], color[1], color[2], color[3]);
+
+                    glRectf(((leftCoord + 8) / 280.0f) - 1, -(((upCoord) / 192.0f) - 1), (leftCoord + 12) / 280.0f - 1,
+                            -((upCoord + 2) / 192.0f - 1));
+                }
+            }
+        }
+
+        // text mode for just bottom 4 rows
+        if(screenFlags & mix)
+        {
+            memcpy(characters + 0x250, screenFlags & pri ? memory + 0x650 : memory + 0xA50, 0x1B0);
+
+            for(unsigned short base = 0x250; base < 0x400; base += 0x80)
+            {
+                for(unsigned short ch = 0; ch < 0x28; ch++)
+                {
+                    charFlags[base + ch] = 0;
+                    if(characters[base + ch] < 0x40)
+                    {
+                        charFlags[base + ch] |= INVERSE;
+                    }
+                    else if(characters[base + ch] < 0x80)
+                    {
+                        charFlags[base + ch] |= FLASHING;
+                        if(!showing)
+                        {
+                            characters[base + ch] = 0xA0;
+                        }
+                    }
+
+                    insertChar(((base - 0x50) * 5) / 2 + ch + 5120, (char) (characters[base + ch] % 0x40), charFlags[base + ch]);
+                }
+            }
+
+            glColor4ub(0xFF, 0xFF, 0xFF, 0xFF);
+            for(unsigned short byte = 6400; byte < 7680; byte++)
+            {
+                for(int shift = 0; shift < 8; shift++)
+                {
+                    if((lopage[byte] & (0b10000000 >> shift)) != 0)
+                    {
+                        int leftCoord = (((byte * 7 + shift) % 280) * 2);
+                        int upCoord = (((byte * 7 + shift) / 280) * 2);
+                        glRectf(((leftCoord - 2) / 280.0f) - 1, -(((upCoord) / 192.0f) - 1), (leftCoord) / 280.0f - 1,
+                                -((upCoord + 2) / 192.0f - 1));
+                    }
                 }
             }
         }
@@ -917,6 +1153,8 @@ int startGLFW()
                 }
                 else
                 {
+
+                    glColor4ub(0xFF, 0xFF, 0xFF, 0xFF);
                     fillBuffer = textMode;
                 }
             }
