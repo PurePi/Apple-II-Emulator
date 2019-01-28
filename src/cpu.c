@@ -5,6 +5,7 @@
 #include "peripheral.h"
 #include "cassette.h"
 #include <process.h>
+#include <time.h>
 
 // PSA: refer to these two pages while reading this code:
 // https://www.masswerk.at/6502/6502_instruction_set.html instructions list and first of the 3 tables at the bottom
@@ -747,9 +748,18 @@ static void run()
     ReleaseMutex(runningMutex);
     unsigned int instructionsRun = 0;
 
-
+    //time_t start = time(NULL);
+    //time_t end;
     while(executeInstruction())
     {
+        /*end = time(NULL);
+        if(difftime(end, start) == 1)
+        {
+            printf("Ran %d instructions\n", instructionsRun);
+            instructionsRun = 0;
+            start = time(NULL);
+        }*/
+
         WaitForSingleObject(runningMutex, INFINITE);
         if(!running)
         {
@@ -761,8 +771,8 @@ static void run()
 
         //Sleep(100);
         instructionsRun++;
+        //start = time(NULL);
     }
-
 
     printf("Done after %d instructions\n\n", instructionsRun);
     printf("PC: %04X\t%02X %02X %02X\n\nA\tX\tY\tS\tN V B D I Z C\n%02X\t%02X\t%02X\t%02X\t%u %u %u %u %u %u %u\n\n", PC, memory[PC], memory[PC+1], memory[PC+2], A, X, Y, S, N, V, B, D, I, Z, C);

@@ -3,7 +3,7 @@
 /**
  * initializes testCard
  *
- * memory pointer not needed because this card won't be for slot 0
+ * memory pointer not needed because this card isn't for slot 0
  */
 void startup()
 {

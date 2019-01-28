@@ -10,7 +10,7 @@ COUTHI  EQU $06
 PAGE1Y  EQU $07         ; keep track of Y position on first page
 PAGE2Y  EQU $08         ; keep track of Y position on second page
 
-        JMP cardex      ; jump to an example
+        JMP kbdex       ; jump to an example
 
 *       writing to screen example
 
@@ -20,28 +20,24 @@ ROW1H   EQU $04         ; high byte of rows 1 and 2
 ROW3H   EQU $05         ; high byte of rows 3 and 4
 PG2H    EQU $08         ; high byte of screen page 2 (first row)
 
-printex LDA #$21        ; starting ascii code
+printex LDA #$A0        ; start at first normal character
         LDY #$00        ; index in row to place char
-
         LDX #ROW1H      ; put address of row into COUTLO, COUTHI
         STX COUTHI
         LDX #ODDROWL
         STX COUTLO
         JSR outloop
-
         LDX #EVNROWL    ; adjust row base address, row 2 is even but page is the same so COUTHI can stay
         STX COUTLO
         JSR outloop
-
         LDX #ROW3H      ; adjust row base address, page also changes this time
         STX COUTHI
         LDX #ODDROWL
         STX COUTLO
         JSR outloop
 done    HCF             ; halt and catch fire
-
 outloop STA (COUTLO),Y  ; store character at row base address + Y
-        CMP #$7F
+        CMP #$DF
         BEQ done        ; done when we reach last character
         ADC #$01
         INY
@@ -54,55 +50,49 @@ outloop STA (COUTLO),Y  ; store character at row base address + Y
 *       print keyboard input onto screen example
 
 kbdex   LDY #$00        ; set up screen output the same way as above example
-
         LDX #ROW1H
         STX COUTHI
         LDX #ODDROWL
         STX COUTLO
-
-scanin  BIT $C000       ; check if highest bit is on (input received flag)
+undersc CLC
+        LDA #$5F
+        STA (COUTLO),Y
+scan    BIT $C000       ; check if highest bit is on (input received flag)
         BMI input
-        JMP scanin
-
-input   LDA $C000       ; get that input, remove highest bit to get ascii code
-        AND #$7F
+        JMP scan
+input   LDA $C000       ; get that input, keep highest bit to display normally
         STA $C010       ; reference $C010-$C01F to clear input flag on $C000-$C00F
-        CMP #$09        ; tab to switch pages
+        CMP #$8D        ; enter to switch pages
         BEQ swtchpg
         CLC
         STA (COUTLO),Y
         INY
         CPY #$28
-        BNE scanin
+        BNE undersc
         LDY #$00        ; just wrap around same line
-        CLC             ; CPY sets carry if Y >= data ($28 = $28 in this case)
-        JMP scanin
-
+        JMP undersc
 swtchpg LDX COUTHI
         CPX #PG2H       ; if high byte of row is $08, we're currently on second page so we switch to the first
-        BEQ firstpg
+        BEQ firstpg     ; otherwise this branch doesn't happen and it continues to switch to second page
 secndpg STA $C055       ; switch to second page
         STY PAGE1Y      ; save Y offset used in first page
         LDY PAGE2Y      ; recall the offset used in second page
         LDX #PG2H       ; switch base address of row to that of the second page
         STX COUTHI
-        JMP scanin
+        JMP undersc
 firstpg STA $C054       ; switch to first page
         STY PAGE2Y
         LDY PAGE1Y
         LDX #ROW1H
         STX COUTHI
-        JMP scanin
-
+        JMP undersc
 *       using peripheral cards in slot 1 and 4 example (both contain the same card)
 
 cardex  STA $C090       ; first need to reference slot 1's GPIO space to select it
         JSR $C100       ; jump to its PROM
-
         STA $C0C4       ; now let's use slot 4 (can reference any byte in its GPIO space, not only byte 0)
         JSR $C400
-
-        STA $C090       ; and slot 1 again
+        STA $C090       ; and slot 1 again (remember that this first reference does not trigger its callback, only enables it)
         JSR $C100
         HCF
 

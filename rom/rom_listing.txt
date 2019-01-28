@@ -1,4 +1,4 @@
-                     * listing for rom.asm generated on 2019-1-23 at 16:35:45
+                     * listing for rom.asm generated on 2019-1-27 at 19:13:51
 
 FA00:              1         ORG $FA00       ; we know this code will be loaded into address $FA00, and the reset vector points here
 FA00:              2 
@@ -12,7 +12,7 @@ FA00:              9 COUTHI  EQU $06
 FA00:             10 PAGE1Y  EQU $07         ; keep track of Y position on first page
 FA00:             11 PAGE2Y  EQU $08         ; keep track of Y position on second page
 FA00:             12 
-FA00:  4C 84 FA   13         JMP card1       ; jump to an example
+FA00:  4C 36 FA   13         JMP kbdex       ; jump to an example
 FA03:             14 
 FA03:             15 *       writing to screen example
 FA03:             16 
@@ -22,110 +22,100 @@ FA03:             19 ROW1H   EQU $04         ; high byte of rows 1 and 2
 FA03:             20 ROW3H   EQU $05         ; high byte of rows 3 and 4
 FA03:             21 PG2H    EQU $08         ; high byte of screen page 2 (first row)
 FA03:             22 
-FA03:  A9 21      23 printex LDA #$21        ; starting ascii code
+FA03:  A9 A0      23 printex LDA #$A0        ; start at first normal character
 FA05:  A0 00      24         LDY #$00        ; index in row to place char
-FA07:             25 
-FA07:  A2 04      26         LDX #ROW1H      ; put address of row into COUTLO, COUTHI
-FA09:  86 06      27         STX COUTHI
-FA0B:  A2 00      28         LDX #ODDROWL
-FA0D:  86 05      29         STX COUTLO
-FA0F:  20 25 FA   30         JSR outloop
-FA12:             31 
-FA12:  A2 80      32         LDX #EVNROWL    ; adjust row base address, row 2 is even but page is the same so COUTHI can stay
-FA14:  86 05      33         STX COUTLO
-FA16:  20 25 FA   34         JSR outloop
-FA19:             35 
-FA19:  A2 05      36         LDX #ROW3H      ; adjust row base address, page also changes this time
-FA1B:  86 06      37         STX COUTHI
-FA1D:  A2 00      38         LDX #ODDROWL
-FA1F:  86 05      39         STX COUTLO
-FA21:  20 25 FA   40         JSR outloop
-FA24:  02         41 done    HCF             ; halt and catch fire
-FA25:             42 
-FA25:  91 05      43 outloop STA (COUTLO),Y  ; store character at row base address + Y
-FA27:  C9 7F      44         CMP #$7F
-FA29:  F0 F9      45         BEQ done        ; done when we reach last character
-FA2B:  69 01      46         ADC #$01
-FA2D:  C8         47         INY
-FA2E:  C0 28      48         CPY #$28
-FA30:  D0 F3      49         BNE outloop
-FA32:  A0 00      50         LDY #$00
-FA34:  18         51         CLC             ; CPY sets carry if Y >= data ($28 = $28 in this case)
-FA35:  60         52         RTS
-FA36:             53 
-FA36:             54 *       print keyboard input onto screen example
-FA36:             55 
-FA36:  A0 00      56 kbdex   LDY #$00        ; set up screen output the same way as above example
-FA38:             57 
-FA38:  A2 04      58         LDX #ROW1H
-FA3A:  86 06      59         STX COUTHI
-FA3C:  A2 00      60         LDX #ODDROWL
-FA3E:  86 05      61         STX COUTLO
-FA40:             62 
-FA40:  2C 00 C0   63 scanin  BIT $C000       ; check if highest bit is on (input received flag)
-FA43:  30 03      64         BMI input
-FA45:  4C 40 FA   65         JMP scanin
-FA48:             66 
-FA48:  AD 00 C0   67 input   LDA $C000       ; get that input, remove highest bit to get ascii code
-FA4B:  29 7F      68         AND #$7F
-FA4D:  8D 10 C0   69         STA $C010       ; reference $C010-$C01F to clear input flag on $C000-$C00F
-FA50:  C9 09      70         CMP #$09        ; tab to switch pages
-FA52:  F0 0E      71         BEQ swtchpg
-FA54:  18         72         CLC
-FA55:  91 05      73         STA (COUTLO),Y
-FA57:  C8         74         INY
-FA58:  C0 28      75         CPY #$28
-FA5A:  D0 E4      76         BNE scanin
-FA5C:  A0 00      77         LDY #$00        ; just wrap around same line
-FA5E:  18         78         CLC             ; CPY sets carry if Y >= data ($28 = $28 in this case)
-FA5F:  4C 40 FA   79         JMP scanin
-FA62:             80 
-FA62:  A6 06      81 swtchpg LDX COUTHI
-FA64:  E0 08      82         CPX #PG2H       ; if high byte of row is $08, we're currently on second page so we switch to the first
-FA66:  F0 0E      83         BEQ firstpg
-FA68:  8D 55 C0   84 secndpg STA $C055       ; switch to second page
-FA6B:  84 07      85         STY PAGE1Y      ; save Y offset used in first page
-FA6D:  A4 08      86         LDY PAGE2Y      ; recall the offset used in second page
-FA6F:  A2 08      87         LDX #PG2H       ; switch base address of row to that of the second page
-FA71:  86 06      88         STX COUTHI
-FA73:  4C 40 FA   89         JMP scanin
-FA76:  8D 54 C0   90 firstpg STA $C054       ; switch to first page
-FA79:  84 08      91         STY PAGE2Y
-FA7B:  A4 07      92         LDY PAGE1Y
-FA7D:  A2 04      93         LDX #ROW1H
-FA7F:  86 06      94         STX COUTHI
-FA81:  4C 40 FA   95         JMP scanin
-FA84:             96 
-FA84:             97         ; using peripheral card in slot 1 example
-FA84:             98 
-FA84:  8D 90 C0   99 card1   STA $C090       ; first need to reference slot 1's GPIO space to select it
-FA87:  20 00 C1  100         JSR $C100       ; jump to its PROM
-FA8A:            101 
-FA8A:  8D C4 C0  102         STA $C0C4       ; now let's use slot 4
-FA8D:  20 00 C4  103         JSR $C400
-FA90:            104 
-FA90:  8D 90 C0  105         STA $C090       ; and slot 1 again
-FA93:  20 00 C1  106         JSR $C100
-FA96:  02        107         HCF
-FA97:            108 
-FA97:            109 *       ROM subroutines
-FA97:            110 
-FA97:  85 00     111 SAVE    STA ACC
-FA99:  86 01     112         STX XREG
-FA9B:  84 02     113         STY YREG
-FA9D:  08        114         PHP
-FA9E:  68        115         PLA
-FA9F:  85 03     116         STA STATUS
-FAA1:  BA        117         TSX
-FAA2:  86 04     118         STX SPTR
-FAA4:  D8        119         CLD
-FAA5:  60        120         RTS
-FAA6:  A5 03     121 RESTORE LDA STATUS
-FAA8:  48        122         PHA
-FAA9:  A5 00     123         LDA ACC
-FAAB:  A6 01     124         LDX XREG
-FAAD:  A4 02     125         LDY YREG
-FAAF:  28        126         PLP
-FAB0:  60        127         RTS
+FA07:  A2 04      25         LDX #ROW1H      ; put address of row into COUTLO, COUTHI
+FA09:  86 06      26         STX COUTHI
+FA0B:  A2 00      27         LDX #ODDROWL
+FA0D:  86 05      28         STX COUTLO
+FA0F:  20 25 FA   29         JSR outloop
+FA12:  A2 80      30         LDX #EVNROWL    ; adjust row base address, row 2 is even but page is the same so COUTHI can stay
+FA14:  86 05      31         STX COUTLO
+FA16:  20 25 FA   32         JSR outloop
+FA19:  A2 05      33         LDX #ROW3H      ; adjust row base address, page also changes this time
+FA1B:  86 06      34         STX COUTHI
+FA1D:  A2 00      35         LDX #ODDROWL
+FA1F:  86 05      36         STX COUTLO
+FA21:  20 25 FA   37         JSR outloop
+FA24:  02         38 done    HCF             ; halt and catch fire
+FA25:  91 05      39 outloop STA (COUTLO),Y  ; store character at row base address + Y
+FA27:  C9 DF      40         CMP #$DF
+FA29:  F0 F9      41         BEQ done        ; done when we reach last character
+FA2B:  69 01      42         ADC #$01
+FA2D:  C8         43         INY
+FA2E:  C0 28      44         CPY #$28
+FA30:  D0 F3      45         BNE outloop
+FA32:  A0 00      46         LDY #$00
+FA34:  18         47         CLC             ; CPY sets carry if Y >= data ($28 = $28 in this case)
+FA35:  60         48         RTS
+FA36:             49 
+FA36:             50 *       print keyboard input onto screen example
+FA36:             51 
+FA36:  A0 00      52 kbdex   LDY #$00        ; set up screen output the same way as above example
+FA38:  A2 04      53         LDX #ROW1H
+FA3A:  86 06      54         STX COUTHI
+FA3C:  A2 00      55         LDX #ODDROWL
+FA3E:  86 05      56         STX COUTLO
+FA40:  18         57 undersc CLC
+FA41:  A9 5F      58         LDA #$5F
+FA43:  91 05      59         STA (COUTLO),Y
+FA45:  2C 00 C0   60 scan    BIT $C000       ; check if highest bit is on (input received flag)
+FA48:  30 03      61         BMI input
+FA4A:  4C 45 FA   62         JMP scan
+FA4D:  AD 00 C0   63 input   LDA $C000       ; get that input, keep highest bit to display normally
+FA50:  8D 10 C0   64         STA $C010       ; reference $C010-$C01F to clear input flag on $C000-$C00F
+FA53:  C9 8D      65         CMP #$8D        ; enter to switch pages
+FA55:  F0 0D      66         BEQ swtchpg
+FA57:  18         67         CLC
+FA58:  91 05      68         STA (COUTLO),Y
+FA5A:  C8         69         INY
+FA5B:  C0 28      70         CPY #$28
+FA5D:  D0 E1      71         BNE undersc
+FA5F:  A0 00      72         LDY #$00        ; just wrap around same line
+FA61:  4C 40 FA   73         JMP undersc
+FA64:  A6 06      74 swtchpg LDX COUTHI
+FA66:  E0 08      75         CPX #PG2H       ; if high byte of row is $08, we're currently on second page so we switch to the first
+FA68:  F0 0E      76         BEQ firstpg     ; otherwise this branch doesn't happen and it continues to switch to second page
+FA6A:  8D 55 C0   77 secndpg STA $C055       ; switch to second page
+FA6D:  84 07      78         STY PAGE1Y      ; save Y offset used in first page
+FA6F:  A4 08      79         LDY PAGE2Y      ; recall the offset used in second page
+FA71:  A2 08      80         LDX #PG2H       ; switch base address of row to that of the second page
+FA73:  86 06      81         STX COUTHI
+FA75:  4C 40 FA   82         JMP undersc
+FA78:  8D 54 C0   83 firstpg STA $C054       ; switch to first page
+FA7B:  84 08      84         STY PAGE2Y
+FA7D:  A4 07      85         LDY PAGE1Y
+FA7F:  A2 04      86         LDX #ROW1H
+FA81:  86 06      87         STX COUTHI
+FA83:  4C 40 FA   88         JMP undersc
+FA86:             89 *       using peripheral cards in slot 1 and 4 example (both contain the same card)
+FA86:             90 
+FA86:  8D 90 C0   91 cardex  STA $C090       ; first need to reference slot 1's GPIO space to select it
+FA89:  20 00 C1   92         JSR $C100       ; jump to its PROM
+FA8C:  8D C4 C0   93         STA $C0C4       ; now let's use slot 4 (can reference any byte in its GPIO space, not only byte 0)
+FA8F:  20 00 C4   94         JSR $C400
+FA92:  8D 90 C0   95         STA $C090       ; and slot 1 again (remember that this first reference does not trigger its callback, only enables it)
+FA95:  20 00 C1   96         JSR $C100
+FA98:  02         97         HCF
+FA99:             98 
+FA99:             99 *       ROM subroutines
+FA99:            100 
+FA99:  85 00     101 SAVE    STA ACC
+FA9B:  86 01     102         STX XREG
+FA9D:  84 02     103         STY YREG
+FA9F:  08        104         PHP
+FAA0:  68        105         PLA
+FAA1:  85 03     106         STA STATUS
+FAA3:  BA        107         TSX
+FAA4:  86 04     108         STX SPTR
+FAA6:  D8        109         CLD
+FAA7:  60        110         RTS
+FAA8:  A5 03     111 RESTORE LDA STATUS
+FAAA:  48        112         PHA
+FAAB:  A5 00     113         LDA ACC
+FAAD:  A6 01     114         LDX XREG
+FAAF:  A4 02     115         LDY YREG
+FAB1:  28        116         PLP
+FAB2:  60        117         RTS
 
-                     * Assembled 177 bytes
+                     * Assembled 179 bytes

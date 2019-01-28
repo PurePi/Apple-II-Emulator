@@ -45,15 +45,19 @@ static void ioSelect(unsigned short address)
         }
         else if(address < 0xC058)
         {
-            WaitForSingleObject(screenMutex, INFINITE);
-            screenFlagsChanged = 1;
             switch(address)
             {
             case 0xC050: // set graphics mode
+                WaitForSingleObject(screenMutex, INFINITE);
+                screenFlagsChanged = 1;
                 screenFlags |= gr;
+                ReleaseMutex(screenMutex);
                 break;
             case 0xC051: // set text mode
+                WaitForSingleObject(screenMutex, INFINITE);
+                screenFlagsChanged = 1;
                 screenFlags &= ~gr;
+                ReleaseMutex(screenMutex);
                 break;
             case 0xC052: // set all text or graphics
                 screenFlags &= ~mix;
@@ -68,15 +72,20 @@ static void ioSelect(unsigned short address)
                 screenFlags &= ~pri;
                 break;
             case 0xC056: // set low-res graphics
+                WaitForSingleObject(screenMutex, INFINITE);
+                screenFlagsChanged = 1;
                 screenFlags |= lores;
+                ReleaseMutex(screenMutex);
                 break;
             case 0xC057: // set hi-res graphics
+                WaitForSingleObject(screenMutex, INFINITE);
+                screenFlagsChanged = 1;
                 screenFlags &= ~lores;
+                ReleaseMutex(screenMutex);
                 break;
             default:
                 break;
             }
-            ReleaseMutex(screenMutex);
         }
         else if(address < 0xC060)
         {

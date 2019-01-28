@@ -42,6 +42,9 @@ int main()
         return 0;
     }
 
+    // for text mode (default from a cold start), set all to black space
+    memset(memory + 0x400, 0xA0, 0x800);
+
     memMutex = CreateMutex(NULL, FALSE, NULL);
     screenMutex = CreateMutex(NULL, FALSE, NULL);
     runningMutex = CreateMutex(NULL, FALSE, NULL);
