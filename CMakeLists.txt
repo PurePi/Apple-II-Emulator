@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(Apple_II_Emulator C)
+project(Apple-II C)
 
 set(CMAKE_C_STANDARD 11)
 
@@ -8,10 +8,10 @@ find_package(OpenGL REQUIRED)
 include_directories(include)
 link_directories(dependencies)
 
-add_executable(Apple_II_Emulator src/main.c src/memory.c include/memory.h src/cpu.c include/cpu.h src/HIF.c include/HIF.h src/cassette.c src/cassette.h src/peripheral.c src/peripheral.h)
+add_executable(Apple-II WIN32 src/main.c src/memory.c include/memory.h src/cpu.c include/cpu.h src/HIF.c include/HIF.h src/cassette.c src/cassette.h src/peripheral.c src/peripheral.h)
 
-target_link_libraries(Apple_II_Emulator glfw ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} jsmn)
+target_link_libraries(Apple-II glfw ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} jsmn)
 
-add_custom_command(TARGET Apple_II_Emulator
+add_custom_command(TARGET Apple-II
         POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Apple_II_Emulator> ../$<TARGET_FILE_NAME:Apple_II_Emulator>)
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Apple-II> ../$<TARGET_FILE_NAME:Apple-II>)

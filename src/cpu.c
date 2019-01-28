@@ -746,20 +746,10 @@ static void run()
     WaitForSingleObject(runningMutex, INFINITE);
     running = 1;
     ReleaseMutex(runningMutex);
-    unsigned int instructionsRun = 0;
+    //unsigned int instructionsRun = 0;
 
-    //time_t start = time(NULL);
-    //time_t end;
     while(executeInstruction())
     {
-        /*end = time(NULL);
-        if(difftime(end, start) == 1)
-        {
-            printf("Ran %d instructions\n", instructionsRun);
-            instructionsRun = 0;
-            start = time(NULL);
-        }*/
-
         WaitForSingleObject(runningMutex, INFINITE);
         if(!running)
         {
@@ -767,15 +757,12 @@ static void run()
             break;
         }
         ReleaseMutex(runningMutex);
-        // TODO maybe add a timer and let user specify speed in MHz in config.json
 
-        //Sleep(100);
-        instructionsRun++;
-        //start = time(NULL);
+        //instructionsRun++;
     }
 
-    printf("Done after %d instructions\n\n", instructionsRun);
-    printf("PC: %04X\t%02X %02X %02X\n\nA\tX\tY\tS\tN V B D I Z C\n%02X\t%02X\t%02X\t%02X\t%u %u %u %u %u %u %u\n\n", PC, memory[PC], memory[PC+1], memory[PC+2], A, X, Y, S, N, V, B, D, I, Z, C);
+    //printf("Done after %d instructions\n\n", instructionsRun);
+    //printf("PC: %04X\t%02X %02X %02X\n\nA\tX\tY\tS\tN V B D I Z C\n%02X\t%02X\t%02X\t%02X\t%u %u %u %u %u %u %u\n\n", PC, memory[PC], memory[PC+1], memory[PC+2], A, X, Y, S, N, V, B, D, I, Z, C);
 
     unmountCards();
     closeTape();
@@ -784,7 +771,7 @@ static void run()
     cpuThread = 0;
     running = 0; // in case !executeInstruction() was the reason the loop exited
     ReleaseMutex(runningMutex);
-    printf("done running\n");
+    //printf("done running\n");
 }
 
 /**

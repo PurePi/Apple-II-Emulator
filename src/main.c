@@ -4,6 +4,8 @@
 #include <memory.h>
 #include "peripheral.h"
 
+extern char errorMsg[FILENAME_MAX];
+
 /**
  * reads a file into memory
  * @param filename name of file to read
@@ -21,7 +23,7 @@ static char readFile(char *filename, void *readTo)
         fseek(fp, 0, SEEK_SET);
         if(fread(readTo, 1, fileLength, fp) != fileLength)
         {
-            printf("Error when reading %s", filename);
+            sprintf(errorMsg, "Error when reading %s", filename);
             fclose(fp);
             return 0;
         }
@@ -51,15 +53,15 @@ int main()
 
     reset();
 
-    Sleep(500);
-
     switch(startGLFW())
     {
     case 1:
-        printf("glfw init error\n");
+        sprintf(errorMsg, "glfw init error\n");
+        MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
         break;
     case 2:
-        printf("glfw create window error\n");
+        sprintf(errorMsg, "glfw create window error\n");
+        MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
     default:
         break;
     }

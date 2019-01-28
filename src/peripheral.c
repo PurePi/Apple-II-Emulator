@@ -10,6 +10,8 @@
 
 struct peripheralCard peripherals[8] = { 0 };
 
+char errorMsg[FILENAME_MAX] = { 0 };
+
 /**
  * checks if token starts with str
  * @param json json string
@@ -46,8 +48,9 @@ char mountCards()
 
         if(fread(json, 1, fileLength, config) != fileLength)
         {
-            printf("Error when reading config file");
+            sprintf(errorMsg, "Error when reading config file");
             fclose(config);
+            MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
             return 0;
         }
         json[fileLength] = 0;
@@ -55,7 +58,8 @@ char mountCards()
     }
     else
     {
-        printf("Error when opening config file");
+        sprintf(errorMsg, "Error when opening config file");
+        MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
         return 0;
     }
 
@@ -65,12 +69,14 @@ char mountCards()
     int jsmnResult = jsmn_parse(&p, json, strlen(json), tokens, 19);
     if(jsmnResult < 0)
     {
-        printf("Error parsing JSON file\n");
+        sprintf(errorMsg, "Error parsing JSON file\n");
+        MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
         return 0;
     }
     if(jsmnResult == 0 || tokens[0].type != JSMN_OBJECT)
     {
-        printf("Top level of config file should be an object.\n");
+        sprintf(errorMsg, "Top level of config file should be an object.\n");
+        MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
         return 0;
     }
 
@@ -92,33 +98,37 @@ char mountCards()
             int cardNumber = strtol(json +tokens[tok].end - 1, NULL, 10);
             if(errno == EINVAL)
             {
-                printf("Error parsing card number in config.json\n");
+                sprintf(errorMsg, "Error parsing card number in config.json\n");
+                MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                 return 0;
             }
             if(cardNumber > 7)
             {
-                printf("Error: found card number > 7 (%d)", cardNumber);
+                sprintf(errorMsg, "Error: found card number > 7 (%d)", cardNumber);
+                MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                 return 0;
             }
 
-            //printf("Mounting %s for slot %d\n", periphCard, cardNumber);
             peripherals[cardNumber].handle = dlopen(periphCard, RTLD_LAZY | RTLD_LOCAL);
             peripherals[cardNumber].startup = dlsym(peripherals[cardNumber].handle, "startup");
             if(peripherals[cardNumber].startup == NULL)
             {
-                printf("Could not find startup in %s", periphCard);
+                sprintf(errorMsg, "Could not find startup in %s", periphCard);
+                MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                 return 0;
             }
             peripherals[cardNumber].shutdown = dlsym(peripherals[cardNumber].handle, "shutdown");
             if(peripherals[cardNumber].shutdown == NULL)
             {
-                printf("Could not find shutdown in %s", periphCard);
+                sprintf(errorMsg, "Could not find shutdown in %s", periphCard);
+                MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                 return 0;
             }
             peripherals[cardNumber].deviceSelect = dlsym(peripherals[cardNumber].handle, "deviceSelect");
             if(peripherals[cardNumber].deviceSelect == NULL)
             {
-                printf("Could not find deviceSelect in %s", periphCard);
+                sprintf(errorMsg, "Could not find deviceSelect in %s", periphCard);
+                MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                 return 0;
             }
 
@@ -127,7 +137,8 @@ char mountCards()
                 peripherals[cardNumber].memRef = dlsym(peripherals[cardNumber].handle, "memRef");
                 if(peripherals[cardNumber].memRef == NULL)
                 {
-                    printf("Could not find memRef in %s", periphCard);
+                    sprintf(errorMsg, "Could not find memRef in %s", periphCard);
+                    MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                     return 0;
                 }
                 // startup takes pointer to memory in this case
@@ -145,12 +156,14 @@ char mountCards()
 
                     if(fileLength > 0x100)
                     {
-                        printf("PROM file %s is larger than 256 bytes", periphCard);
+                        sprintf(errorMsg, "PROM file %s is larger than 256 bytes", periphCard);
+                        MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                     }
 
                     if(fread(memory + 0xC000 + (0x100 * cardNumber), 1, fileLength, promFile) != fileLength)
                     {
-                        printf("Error when reading %s", periphCard);
+                        sprintf(errorMsg, "Error when reading %s", periphCard);
+                        MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                         fclose(promFile);
                         return 0;
                     }
@@ -158,7 +171,8 @@ char mountCards()
                 }
                 else
                 {
-                    printf("Error when opening %s", periphCard);
+                    sprintf(errorMsg, "Error when opening %s", periphCard);
+                    MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                     return 0;
                 }
                 memcpy(periphCard + 6 + strlen(json + tokens[tok+1].start), "XROM.bin", 9);
@@ -171,12 +185,14 @@ char mountCards()
 
                     if(fileLength > 0x800)
                     {
-                        printf("XROM file %s is larger than 2048 bytes", periphCard);
+                        sprintf(errorMsg, "XROM file %s is larger than 2048 bytes", periphCard);
+                        MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                     }
 
                     if(fread(peripherals[cardNumber].expansionRom, 1, fileLength, xromFile) != fileLength)
                     {
-                        printf("Error when reading %s", periphCard);
+                        sprintf(errorMsg, "Error when reading %s", periphCard);
+                        MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                         fclose(xromFile);
                         return 0;
                     }
@@ -184,7 +200,8 @@ char mountCards()
                 }
                 else
                 {
-                    printf("Error when opening %s", periphCard);
+                    sprintf(errorMsg, "Error when opening %s", periphCard);
+                    MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
                     return 0;
                 }
 
