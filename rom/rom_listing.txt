@@ -1,187 +1,187 @@
-                     * listing for rom.asm generated on 2019-1-30 at 12:46:06
+                     * listing for rom.asm generated on 2019-1-30 at 13:35:08
 
-FA00:              1         ORG $FA00       ; we know this code will be loaded into address $FA00, and the reset vector points here
-FA00:              2 
-FA00:              3 ACC     EQU $00         ; zeropage addresses used for storing important data
-FA00:              4 XREG    EQU $01
-FA00:              5 YREG    EQU $02
-FA00:              6 STATUS  EQU #03
-FA00:              7 SPTR    EQU $04
-FA00:              8 COUTLO  EQU $05         ; for storing low/high byte of row address
-FA00:              9 COUTHI  EQU $06
-FA00:             10 PAGE1Y  EQU $07         ; keep track of Y position on first page
-FA00:             11 PAGE2Y  EQU $08         ; keep track of Y position on second page
-FA00:             12 
-FA00:  4C 03 FA   13         JMP print       ; jump to an example
-FA03:             14 
-FA03:             15 *       writing to screen demo
-FA03:             16 
-FA03:             17 ODDROWL EQU $00         ; low byte of odd-numbered rows (first row is row 1 in this example)
-FA03:             18 EVNROWL EQU $80
-FA03:             19 ROW1H   EQU $04         ; high byte of rows 1 and 2
-FA03:             20 ROW3H   EQU $05         ; high byte of rows 3 and 4
-FA03:             21 PG2H    EQU $08         ; high byte of screen page 2 (first row)
-FA03:             22 
-FA03:  A9 A0      23 print   LDA #$A0        ; start at first normal character
-FA05:  A0 00      24         LDY #$00        ; index in row to place char
-FA07:  A2 04      25         LDX #ROW1H      ; put address of row into COUTLO, COUTHI
-FA09:  86 06      26         STX COUTHI
-FA0B:  A2 00      27         LDX #ODDROWL
-FA0D:  86 05      28         STX COUTLO
-FA0F:  20 25 FA   29         JSR outloop
-FA12:  A2 80      30         LDX #EVNROWL    ; adjust row base address, row 2 is even but page is the same so COUTHI can stay
-FA14:  86 05      31         STX COUTLO
-FA16:  20 25 FA   32         JSR outloop
-FA19:  A2 05      33         LDX #ROW3H      ; adjust row base address, page also changes this time
-FA1B:  86 06      34         STX COUTHI
-FA1D:  A2 00      35         LDX #ODDROWL
-FA1F:  86 05      36         STX COUTLO
-FA21:  20 25 FA   37         JSR outloop
-FA24:  02         38 done    HCF             ; halt and catch fire
-FA25:  91 05      39 outloop STA (COUTLO),Y  ; store character at row base address + Y
-FA27:  C9 DF      40         CMP #$DF
-FA29:  F0 F9      41         BEQ done        ; done when we reach last character
-FA2B:  69 01      42         ADC #$01
-FA2D:  C8         43         INY
-FA2E:  C0 28      44         CPY #$28
-FA30:  D0 F3      45         BNE outloop
-FA32:  A0 00      46         LDY #$00
-FA34:  18         47         CLC             ; CPY sets carry if Y >= data ($28 = $28 in this case)
-FA35:  60         48         RTS
-FA36:             49 
-FA36:             50 *       print keyboard input onto screen demo
-FA36:             51 
-FA36:  A0 00      52 kbd     LDY #$00        ; set up screen output the same way as above example
-FA38:  A2 04      53         LDX #ROW1H
-FA3A:  86 06      54         STX COUTHI
-FA3C:  A2 00      55         LDX #ODDROWL
-FA3E:  86 05      56         STX COUTLO
-FA40:  18         57 undersc CLC
-FA41:  A9 5F      58         LDA #$5F
-FA43:  91 05      59         STA (COUTLO),Y
-FA45:  2C 00 C0   60 scan    BIT $C000       ; check if highest bit is on (input received flag)
-FA48:  30 03      61         BMI input
-FA4A:  4C 45 FA   62         JMP scan
-FA4D:  AD 00 C0   63 input   LDA $C000       ; get that input, keep highest bit to display normally
-FA50:  8D 10 C0   64         STA $C010       ; reference $C010-$C01F to clear input flag on $C000-$C00F
-FA53:  C9 8D      65         CMP #$8D        ; enter to switch pages
-FA55:  F0 0D      66         BEQ swtchpg
-FA57:  18         67         CLC
-FA58:  91 05      68         STA (COUTLO),Y
-FA5A:  C8         69         INY
-FA5B:  C0 28      70         CPY #$28
-FA5D:  D0 E1      71         BNE undersc
-FA5F:  A0 00      72         LDY #$00        ; just wrap around same line
-FA61:  4C 40 FA   73         JMP undersc
-FA64:  A6 06      74 swtchpg LDX COUTHI
-FA66:  E0 08      75         CPX #PG2H       ; if high byte of row is $08, we're currently on second page so we switch to the first
-FA68:  F0 0E      76         BEQ firstpg     ; otherwise this branch doesn't happen and it continues to switch to second page
-FA6A:  8D 55 C0   77 secndpg STA $C055       ; switch to second page
-FA6D:  84 07      78         STY PAGE1Y      ; save Y offset used in first page
-FA6F:  A4 08      79         LDY PAGE2Y      ; recall the offset used in second page
-FA71:  A2 08      80         LDX #PG2H       ; switch base address of row to that of the second page
-FA73:  86 06      81         STX COUTHI
-FA75:  4C 40 FA   82         JMP undersc
-FA78:  8D 54 C0   83 firstpg STA $C054       ; switch to first page
-FA7B:  84 08      84         STY PAGE2Y
-FA7D:  A4 07      85         LDY PAGE1Y
-FA7F:  A2 04      86         LDX #ROW1H
-FA81:  86 06      87         STX COUTHI
-FA83:  4C 40 FA   88         JMP undersc
-FA86:             89 
-FA86:             90 *       low resolution graphics demo
-FA86:             91 
-FA86:  A0 00      92 lores   LDY #$00
-FA88:  A2 04      93         LDX #ROW1H
-FA8A:  86 06      94         STX COUTHI
-FA8C:  A2 00      95         LDX #ODDROWL
-FA8E:  86 05      96         STX COUTLO
-FA90:  A9 00      97         LDA #$00
-FA92:  8D 50 C0   98         STA $C050       ; switch to graphics mode
-FA95:  8D 56 C0   99         STA $C056       ; set lo-res
-FA98:  18        100 loloop  CLC
-FA99:  91 05     101         STA (COUTLO),Y
-FA9B:  69 01     102         ADC #$01
-FA9D:  C8        103         INY
-FA9E:  C9 28     104         CMP #$28
-FAA0:  D0 F6     105         BNE loloop
-FAA2:  02        106         HCF
-FAA3:            107 
-FAA3:            108 *       high resolution and mixed graphics demo
-FAA3:            109 
-FAA3:            110 HIPG1L  EQU $00
-FAA3:            111 HIPG1H  EQU $20
-FAA3:            112 
-FAA3:  A0 00     113 hires   LDY #$00
-FAA5:  A2 20     114         LDX #HIPG1H
-FAA7:  86 06     115         STX COUTHI
-FAA9:  A2 00     116         LDX #HIPG1L
-FAAB:  86 05     117         STX COUTLO
-FAAD:  8D 50 C0  118         STA $C050       ; switch to graphics mode (hi res already set from cold start)
-FAB0:  91 05     119         STA (COUTLO),Y  ; just placing a few random colors
-FAB2:  A9 12     120         LDA #%00010010
-FAB4:  C8        121         INY
-FAB5:  91 05     122         STA (COUTLO),Y
-FAB7:  A9 01     123         LDA #%00000001  ; MSb is palette, then pairs from LSb determine color
-FAB9:  C8        124         INY
-FABA:  91 05     125         STA (COUTLO),Y
-FABC:  A9 27     126         LDA #%00100111  ; palette = 0, %00 = black, %01 = green, %10 = violet, %11 = white
-FABE:  C8        127         INY
-FABF:  91 05     128         STA (COUTLO),Y
-FAC1:  A9 09     129         LDA #%00001001  ; bit 6 is ignored
-FAC3:  C8        130         INY
-FAC4:  91 05     131         STA (COUTLO),Y
-FAC6:  A9 3F     132         LDA #%00111111
-FAC8:  C8        133         INY
-FAC9:  91 05     134         STA (COUTLO),Y
-FACB:  A9 3B     135         LDA #%00111011  ; note that LSb is leftmost pixel
-FACD:  C8        136         INY
-FACE:  91 05     137         STA (COUTLO),Y
-FAD0:  A9 A5     138         LDA #%10100101  ; palette = 1, %00 = black, %01 = orange, %10 = blue, %11 = white
-FAD2:  C8        139         INY
-FAD3:  91 05     140         STA (COUTLO),Y
-FAD5:  A9 B6     141         LDA #%10110110
-FAD7:  C8        142         INY
-FAD8:  91 05     143         STA (COUTLO),Y
-FADA:  A9 8C     144         LDA #%10001100
-FADC:  C8        145         INY
-FADD:  91 05     146         STA (COUTLO),Y
-FADF:  A9 A1     147         LDA #%10100001
-FAE1:  C8        148         INY
-FAE2:  91 05     149         STA (COUTLO),Y
-FAE4:  8D 53 C0  150         STA $C053       ; enable mixed mode
-FAE7:  A9 C1     151         LDA #$C1        ; place an 'A' at the first location for text captions
-FAE9:  8D 50 06  152         STA $0650
-FAEC:  02        153         HCF
-FAED:            154 
-FAED:            155 *       using peripheral cards in slot 1 and 4 example (both contain the same card)
-FAED:            156 
-FAED:  8D 90 C0  157 card    STA $C090       ; first need to reference slot 1's GPIO space to select it
-FAF0:  20 00 C1  158         JSR $C100       ; jump to its PROM
-FAF3:  8D C4 C0  159         STA $C0C4       ; now let's use slot 4 (can reference any byte in its GPIO space, not only byte 0)
-FAF6:  20 00 C4  160         JSR $C400
-FAF9:  8D 90 C0  161         STA $C090       ; and slot 1 again (remember that this first reference does not trigger its callback, only enables it)
-FAFC:  20 00 C1  162         JSR $C100
-FAFF:  02        163         HCF
-FB00:            164 
-FB00:            165 *       ROM subroutines
-FB00:            166 
-FB00:  85 00     167 SAVE    STA ACC
-FB02:  86 01     168         STX XREG
-FB04:  84 02     169         STY YREG
-FB06:  08        170         PHP
-FB07:  68        171         PLA
-FB08:  85 03     172         STA STATUS
-FB0A:  BA        173         TSX
-FB0B:  86 04     174         STX SPTR
-FB0D:  D8        175         CLD
-FB0E:  60        176         RTS
-FB0F:  A5 03     177 RESTORE LDA STATUS
-FB11:  48        178         PHA
-FB12:  A5 00     179         LDA ACC
-FB14:  A6 01     180         LDX XREG
-FB16:  A4 02     181         LDY YREG
-FB18:  28        182         PLP
-FB19:  60        183         RTS
+F800:              1         ORG $F800       ; we know this code will be loaded into address $F800, and the reset vector points here
+F800:              2 
+F800:              3 ACC     EQU $00         ; zeropage addresses used for storing important data
+F800:              4 XREG    EQU $01
+F800:              5 YREG    EQU $02
+F800:              6 STATUS  EQU #03
+F800:              7 SPTR    EQU $04
+F800:              8 COUTLO  EQU $05         ; for storing low/high byte of row address
+F800:              9 COUTHI  EQU $06
+F800:             10 PAGE1Y  EQU $07         ; keep track of Y position on first page
+F800:             11 PAGE2Y  EQU $08         ; keep track of Y position on second page
+F800:             12 
+F800:  4C 03 F8   13         JMP print       ; jump to an example
+F803:             14 
+F803:             15 *       writing to screen demo
+F803:             16 
+F803:             17 ODDROWL EQU $00         ; low byte of odd-numbered rows (first row is row 1 in this example)
+F803:             18 EVNROWL EQU $80
+F803:             19 ROW1H   EQU $04         ; high byte of rows 1 and 2
+F803:             20 ROW3H   EQU $05         ; high byte of rows 3 and 4
+F803:             21 PG2H    EQU $08         ; high byte of screen page 2 (first row)
+F803:             22 
+F803:  A9 A0      23 print   LDA #$A0        ; start at first normal character
+F805:  A0 00      24         LDY #$00        ; index in row to place char
+F807:  A2 04      25         LDX #ROW1H      ; put address of row into COUTLO, COUTHI
+F809:  86 06      26         STX COUTHI
+F80B:  A2 00      27         LDX #ODDROWL
+F80D:  86 05      28         STX COUTLO
+F80F:  20 25 F8   29         JSR outloop
+F812:  A2 80      30         LDX #EVNROWL    ; adjust row base address, row 2 is even but page is the same so COUTHI can stay
+F814:  86 05      31         STX COUTLO
+F816:  20 25 F8   32         JSR outloop
+F819:  A2 05      33         LDX #ROW3H      ; adjust row base address, page also changes this time
+F81B:  86 06      34         STX COUTHI
+F81D:  A2 00      35         LDX #ODDROWL
+F81F:  86 05      36         STX COUTLO
+F821:  20 25 F8   37         JSR outloop
+F824:  02         38 done    HCF             ; halt and catch fire
+F825:  91 05      39 outloop STA (COUTLO),Y  ; store character at row base address + Y
+F827:  C9 DF      40         CMP #$DF
+F829:  F0 F9      41         BEQ done        ; done when we reach last character
+F82B:  69 01      42         ADC #$01
+F82D:  C8         43         INY
+F82E:  C0 28      44         CPY #$28
+F830:  D0 F3      45         BNE outloop
+F832:  A0 00      46         LDY #$00
+F834:  18         47         CLC             ; CPY sets carry if Y >= data ($28 = $28 in this case)
+F835:  60         48         RTS
+F836:             49 
+F836:             50 *       print keyboard input onto screen demo
+F836:             51 
+F836:  A0 00      52 kbd     LDY #$00        ; set up screen output the same way as above example
+F838:  A2 04      53         LDX #ROW1H
+F83A:  86 06      54         STX COUTHI
+F83C:  A2 00      55         LDX #ODDROWL
+F83E:  86 05      56         STX COUTLO
+F840:  18         57 undersc CLC
+F841:  A9 5F      58         LDA #$5F
+F843:  91 05      59         STA (COUTLO),Y
+F845:  2C 00 C0   60 scan    BIT $C000       ; check if highest bit is on (input received flag)
+F848:  30 03      61         BMI input
+F84A:  4C 45 F8   62         JMP scan
+F84D:  AD 00 C0   63 input   LDA $C000       ; get that input, keep highest bit to display normally
+F850:  8D 10 C0   64         STA $C010       ; reference $C010-$C01F to clear input flag on $C000-$C00F
+F853:  C9 8D      65         CMP #$8D        ; enter to switch pages
+F855:  F0 0D      66         BEQ swtchpg
+F857:  18         67         CLC
+F858:  91 05      68         STA (COUTLO),Y
+F85A:  C8         69         INY
+F85B:  C0 28      70         CPY #$28
+F85D:  D0 E1      71         BNE undersc
+F85F:  A0 00      72         LDY #$00        ; just wrap around same line
+F861:  4C 40 F8   73         JMP undersc
+F864:  A6 06      74 swtchpg LDX COUTHI
+F866:  E0 08      75         CPX #PG2H       ; if high byte of row is $08, we're currently on second page so we switch to the first
+F868:  F0 0E      76         BEQ firstpg     ; otherwise this branch doesn't happen and it continues to switch to second page
+F86A:  8D 55 C0   77 secndpg STA $C055       ; switch to second page
+F86D:  84 07      78         STY PAGE1Y      ; save Y offset used in first page
+F86F:  A4 08      79         LDY PAGE2Y      ; recall the offset used in second page
+F871:  A2 08      80         LDX #PG2H       ; switch base address of row to that of the second page
+F873:  86 06      81         STX COUTHI
+F875:  4C 40 F8   82         JMP undersc
+F878:  8D 54 C0   83 firstpg STA $C054       ; switch to first page
+F87B:  84 08      84         STY PAGE2Y
+F87D:  A4 07      85         LDY PAGE1Y
+F87F:  A2 04      86         LDX #ROW1H
+F881:  86 06      87         STX COUTHI
+F883:  4C 40 F8   88         JMP undersc
+F886:             89 
+F886:             90 *       low resolution graphics demo
+F886:             91 
+F886:  A0 00      92 lores   LDY #$00
+F888:  A2 04      93         LDX #ROW1H
+F88A:  86 06      94         STX COUTHI
+F88C:  A2 00      95         LDX #ODDROWL
+F88E:  86 05      96         STX COUTLO
+F890:  A9 00      97         LDA #$00
+F892:  8D 50 C0   98         STA $C050       ; switch to graphics mode
+F895:  8D 56 C0   99         STA $C056       ; set lo-res
+F898:  18        100 loloop  CLC
+F899:  91 05     101         STA (COUTLO),Y
+F89B:  69 01     102         ADC #$01
+F89D:  C8        103         INY
+F89E:  C9 28     104         CMP #$28
+F8A0:  D0 F6     105         BNE loloop
+F8A2:  02        106         HCF
+F8A3:            107 
+F8A3:            108 *       high resolution and mixed graphics demo
+F8A3:            109 
+F8A3:            110 HIPG1L  EQU $00
+F8A3:            111 HIPG1H  EQU $20
+F8A3:            112 
+F8A3:  A0 00     113 hires   LDY #$00
+F8A5:  A2 20     114         LDX #HIPG1H
+F8A7:  86 06     115         STX COUTHI
+F8A9:  A2 00     116         LDX #HIPG1L
+F8AB:  86 05     117         STX COUTLO
+F8AD:  8D 50 C0  118         STA $C050       ; switch to graphics mode (hi res already set from cold start)
+F8B0:  91 05     119         STA (COUTLO),Y  ; just placing a few random colors
+F8B2:  A9 12     120         LDA #%00010010
+F8B4:  C8        121         INY
+F8B5:  91 05     122         STA (COUTLO),Y
+F8B7:  A9 01     123         LDA #%00000001  ; MSb is palette, then pairs from LSb determine color
+F8B9:  C8        124         INY
+F8BA:  91 05     125         STA (COUTLO),Y
+F8BC:  A9 27     126         LDA #%00100111  ; palette = 0, %00 = black, %01 = green, %10 = violet, %11 = white
+F8BE:  C8        127         INY
+F8BF:  91 05     128         STA (COUTLO),Y
+F8C1:  A9 09     129         LDA #%00001001  ; bit 6 is ignored
+F8C3:  C8        130         INY
+F8C4:  91 05     131         STA (COUTLO),Y
+F8C6:  A9 3F     132         LDA #%00111111
+F8C8:  C8        133         INY
+F8C9:  91 05     134         STA (COUTLO),Y
+F8CB:  A9 3B     135         LDA #%00111011  ; note that LSb is leftmost pixel
+F8CD:  C8        136         INY
+F8CE:  91 05     137         STA (COUTLO),Y
+F8D0:  A9 A5     138         LDA #%10100101  ; palette = 1, %00 = black, %01 = orange, %10 = blue, %11 = white
+F8D2:  C8        139         INY
+F8D3:  91 05     140         STA (COUTLO),Y
+F8D5:  A9 B6     141         LDA #%10110110
+F8D7:  C8        142         INY
+F8D8:  91 05     143         STA (COUTLO),Y
+F8DA:  A9 8C     144         LDA #%10001100
+F8DC:  C8        145         INY
+F8DD:  91 05     146         STA (COUTLO),Y
+F8DF:  A9 A1     147         LDA #%10100001
+F8E1:  C8        148         INY
+F8E2:  91 05     149         STA (COUTLO),Y
+F8E4:  8D 53 C0  150         STA $C053       ; enable mixed mode
+F8E7:  A9 C1     151         LDA #$C1        ; place an 'A' at the first location for text captions
+F8E9:  8D 50 06  152         STA $0650
+F8EC:  02        153         HCF
+F8ED:            154 
+F8ED:            155 *       using peripheral cards in slot 1 and 4 example (both contain the same card)
+F8ED:            156 
+F8ED:  8D 90 C0  157 card    STA $C090       ; first need to reference slot 1's GPIO space to select it
+F8F0:  20 00 C1  158         JSR $C100       ; jump to its PROM
+F8F3:  8D C4 C0  159         STA $C0C4       ; now let's use slot 4 (can reference any byte in its GPIO space, not only byte 0)
+F8F6:  20 00 C4  160         JSR $C400
+F8F9:  8D 90 C0  161         STA $C090       ; and slot 1 again (remember that this first reference does not trigger its callback, only enables it)
+F8FC:  20 00 C1  162         JSR $C100
+F8FF:  02        163         HCF
+F900:            164 
+F900:            165 *       ROM subroutines
+F900:            166 
+F900:  85 00     167 SAVE    STA ACC
+F902:  86 01     168         STX XREG
+F904:  84 02     169         STY YREG
+F906:  08        170         PHP
+F907:  68        171         PLA
+F908:  85 03     172         STA STATUS
+F90A:  BA        173         TSX
+F90B:  86 04     174         STX SPTR
+F90D:  D8        175         CLD
+F90E:  60        176         RTS
+F90F:  A5 03     177 RESTORE LDA STATUS
+F911:  48        178         PHA
+F912:  A5 00     179         LDA ACC
+F914:  A6 01     180         LDX XREG
+F916:  A4 02     181         LDY YREG
+F918:  28        182         PLP
+F919:  60        183         RTS
 
                      * Assembled 282 bytes

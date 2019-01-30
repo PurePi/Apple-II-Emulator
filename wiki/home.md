@@ -20,8 +20,8 @@ first, so you may edit it to program it.
 # Boot up and reset process
 
 When the emulator is first started, the interrupt vector table in vectors.bin loaded into address $FFFA.
-As it is now, the reset vector points to address $FA00 and the IRQ and NMI vectors both point to $0200.
-rom.bin is then loaded into address $FA00, and the CPU reset is triggered.
+As it is now, the reset vector points to address $F800 and the IRQ and NMI vectors both point to $0200.
+rom.bin is then loaded into address $F800, and the CPU reset is triggered.
 
 Once running, the F2 key will "shut down" the system, forcing the CPU to stop running,
 but the emulator will remain open. The F1 key functions as the reset button, triggering the same

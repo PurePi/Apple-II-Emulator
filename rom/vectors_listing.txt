@@ -1,11 +1,11 @@
-                     * listing for vectors.asm generated on 2019-1-23 at 11:52:10
+                     * listing for vectors.asm generated on 2019-1-30 at 13:30:48
 
 0000:              1         ; interrupt vector table
 0000:              2 
 FFFA:              3         ORG $FFFA
 FFFA:              4 
-FFFA:  00 00 02    5         DFW $0200       ; NMI
-FFFC:  00 00 FA    6         DFW $FA00       ; RESET
-FFFE:  00 00 02    7         DFW $0200       ; IRQ
+FFFA:  00 02       5         DFW $0200       ; NMI
+FFFC:  00 F8       6         DFW $F800       ; RESET
+FFFE:  00 02       7         DFW $0200       ; IRQ
 
                      * Assembled 6 bytes

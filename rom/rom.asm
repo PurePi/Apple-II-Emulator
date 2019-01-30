@@ -1,4 +1,4 @@
-        ORG $FA00       ; we know this code will be loaded into address $FA00, and the reset vector points here
+        ORG $F800       ; we know this code will be loaded into address $F800, and the reset vector points here
 
 ACC     EQU $00         ; zeropage addresses used for storing important data
 XREG    EQU $01

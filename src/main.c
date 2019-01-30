@@ -39,7 +39,7 @@ int main()
     {
         return 0;
     }
-    if(!readFile("rom/rom.bin", memory + 0xFA00))
+    if(!readFile("rom/rom.bin", memory + 0xF800))
     {
         return 0;
     }

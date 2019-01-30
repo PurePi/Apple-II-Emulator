@@ -73,11 +73,11 @@ then the file will be closed. If you press the other button, then the file will 
 with the current value of "tape" will be opened for the selected function. If the name of a nonexistant
 file is given when opening a file for listening, no file will be opened and nothing will happen.
 
-Address $C060 is used for recording to the cassette. If no tape is open for recording, or one is open for
+Address $C020-$C02F is used for recording to the cassette. If no tape is open for recording, or one is open for
 listening, this address will be ignored and nothing will happen. When a byte is written to this address,
 it will be written to the file and the cursor will be advanced automatically.
 
-Address $C020 is used for reading from the cassette. If no tape is open for listening, or one is open for
+Address $C060 is used for reading from the cassette. If no tape is open for listening, or one is open for
 recording, this address will be ignored and nothing will happen. When reading from this address, the
 byte pointed to by the cursor will be first inserted to the address and the cursor will be advanced
 automatically.
