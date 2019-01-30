@@ -1,3 +1,5 @@
+<!--not to html-->
+
 In the Apple ][, peripheral cards were attached to one of 8 parallel ports on the motherboard, and they
 could add functionality like floppy drive support. In this emulator, peripheral cards are in the form
 of .dll files. The Programmable ROM (PROM) and expansion ROM (XROM) are to be their own files. Peripheral
@@ -37,6 +39,7 @@ wires. There is an example card implementation under the cards/testCard director
 described here.
 
 ## GPIO
+
 Each card has 16 bytes of the general purpose I/O space from $C080 to $C0FF. Slot 1 gets $C080-C08F, slot
 2 gets $C090-$C09F, etc. The lower 4 bits of the address are consistent regardless of the slot, so you may
 rely on the space to serve a specialized purpose (91/80).
@@ -46,6 +49,7 @@ Each card has an 8 byte scratchpad throughout pages $04 to $07. There is no call
 locations, and the card's PROM/XROM may use these locations for storage of data (93/82).
 
 ## PROM
+
 The PROM is put into a 256-byte space in memory. $C100-$C1FF holds slot 1's PROM, $C200-$C2FF holds
 slot 2's, etc. Generally, the card does not rely on being placed in a specific slot, so this PROM
 should be address-independent. All JMP instructions to other parts of PROM should be replaced with branches
@@ -54,6 +58,7 @@ save several bytes if you're short on space. PROM software is always entered thr
 ($C100, $C200, etc) and typically holds driver software (91/80).
 
 ## XROM
+
 Each card has a 2KB, absolutely-addressed expansion rom that occupies the address space $C800-$CFFF.
 It's important to note that all cards' expansion ROMs share this address space, and only one may be
 accessed at a time. First, the device select (devSel) flag is turned on when the card's GPIO space is
@@ -66,6 +71,7 @@ turn off all cards' devSel flags. Now your card, because its I/O strobe flag is 
 to its XROM (95/84).
 
 ## Slot 0
+
 Slot 0 has no scratchpad space, PROM, or XROM allocated to it. It does, however, have GPIO space. It is
 typically only used for RAM/ROM expansion. Memory expansions were originally done by physically rerouting
 where the data bus got its data from, i.e. memory on the card rather than memory on the motherboard. Because

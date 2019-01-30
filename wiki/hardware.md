@@ -1,15 +1,18 @@
+<!--not to html-->
+
 The emulator is intended to emulate the Apple ]['s hardware as closely as possible. The majority of the
 information used to emulate the hardware's behavior was obtained from the original
 [reference manual](http://www.apple-iigs.info/doc/fichiers/appleiiref.pdf).
 Page numbers in the form `(pdf/document)` will be pointed out to find more information throughout this page.
 
 ## Display
+
 The display is 560x384 pixels, but the resolution is still the original 280x192 "dots". The initial setting
 of the monitor is text mode, display all text or graphics, display primary page, and display hi-res
 graphics. There are 8 different soft switches to control these settings (90/79). Each display mode has two
 pages to display, and soft switches to choose which gets displayed. For text and low resolution mode, page 1
 is in the range $0400-$07FF in memory, and page 2 is in the range $0800-$0BFF. For high resolution mode, the
-pages are located at $2000-$3FFF and $4000-$5FFF. 
+pages are located at $2000-$3FFF and $4000-$5FFF.
 
 In text mode, the values at certain locations on the page produce a character on the screen. The exact
 address and location of each character to display is shown on page 27/16 of the reference manual. To
@@ -41,6 +44,7 @@ last 4 rows of the text page. If displaying page 2 in high resolution, page 2 of
 The address of these last 4 rows are the same as on page 27/16.
 
 ## Keyboard
+
 When pressing a key, the ASCII code for that key, combined with the highest bit (input flag) set, will be
 placed in all memory addresses from $C000 to $C00F for the software to read. This nunmber may be placed
 directy on the screen when in text mode to produce the character. Removing the highest bit will produce a
@@ -54,6 +58,7 @@ original codes. The table on page 18/7 shows the exact values produced by the ke
 memory address between $C010 and $C01F, the input flag will be set to 0 (89/78) (17/6).
 
 ## Cassette Recorder
+
 The cassette recorder is implemented as an interface for file I/O. The original cassette interface used a
 toggle switch to produce a stream of "clicks" to record data onto the cassette, and a flag input to listen
 to those clicks to read that data (33/22). For the sake of simplicity, my implementation treats the
@@ -78,8 +83,11 @@ byte pointed to by the cursor will be first inserted to the address and the curs
 automatically.
 
 ## Peripheral Cards
+
 Peripheral cards are described in the "Peripheral Cards" page
 
 ## Other hardware
+
 The game controllers, speakers, pushbutton inputs and annunciator outputs are not implemented. Memory
-addresses normally allocated to them and the utility strobe (90/79) are useful for general purpose RAM.
+addresses normally allocated to them and the utility strobe (90/79) are useful for general purpose RAM
+as they have no special purpose in this emulator.
