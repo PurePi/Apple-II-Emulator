@@ -10,7 +10,7 @@ the example jumped to on line 13 to see what it can do. The first instruction in
 first, so you may edit it to program it.
 
 ### Some Useful Tables in the [Reference Manual](http://www.apple-iigs.info/doc/fichiers/appleiiref.pdf)
-{page numbers are in the form `pdf/manual`}:
+(page numbers are in the form `pdf/manual`):
 
 - 18/7: values of keys from keyboard
 - 26/15: codes for displaying characters on the screen (keyboard input values correspond with normal characters)

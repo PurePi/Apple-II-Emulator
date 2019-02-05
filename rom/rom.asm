@@ -10,6 +10,11 @@ COUTHI  EQU $06
 PAGE1Y  EQU $07         ; keep track of Y position on first page
 PAGE2Y  EQU $08         ; keep track of Y position on second page
 
+        LDA #$17
+        SEC
+        SBC #$04
+        HCF
+
         JMP print       ; jump to an example
 
 *       writing to screen demo

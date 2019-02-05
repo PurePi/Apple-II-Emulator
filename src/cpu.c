@@ -91,19 +91,6 @@ struct branchInstruction
 
 static int addressMode = ACC;
 
-// look up address mode based on [bbb] and [cc]
-/*static const int modeLookup[7][3] =
-        {
-        [0] = { IMME, XIND, IMME },
-        [1] = { ZPG, ZPG, ZPG },
-        [2] = { IMPL, IMME, ACC },
-        [3] = { ABS, ABS, ABS },
-        [4] = { },
-        [5] = {},
-        [6] = {},
-        [7] = {}
-        };*/
-
 /**
  * pushes a value onto the stack
  * @param val the value to push
@@ -161,13 +148,7 @@ static unsigned char load()
     default:
         return 0;
     }
-
-    unsigned char byte = readByte(address);
-    if(D)
-    {
-        byte = (unsigned char) (((byte >> 4) * 10) + (byte & 0xF));
-    }
-    return byte;
+    return readByte(address);
 }
 
 /**
@@ -564,13 +545,25 @@ static int executeInstruction()
                 Z = A == 0 ? 1 : 0;
                 break;
             case 3:     // ADC
+                if(D)
+                {
+                    data = (unsigned char) (((data >> 4) * 10) + (data & 0xF));
+                    A = (unsigned char) (((A >> 4) * 10) + (A & 0xF));
+                }
+
                 hold = A;
                 A += data + C;
+
+                if(D)
+                {
+                    A = (unsigned char) (((A / 10) * 16) + (A % 10));
+                }
+
                 // TODO figure out if this sets the V flag properly
                 V = ((signed char) hold >= 0 && (signed char) data >= 0 && (signed char) A < 0)
                         || ((signed char) hold < 0 && (signed char) data < 0 && (signed char) A >= 0) ? 1 : 0;
 
-                C = (int) hold + data + C > 0xFF ? 1 : 0;
+                C = (int) hold + data + C > (D ? 0x99 : 0xFF) ? 1 : 0;
                 N = (signed char) A < 0 ? 1 : 0;
                 Z = A == 0 ? 1 : 0;
                 break;
@@ -586,13 +579,26 @@ static int executeInstruction()
                 Z = data == 0 ? 1 : 0;
                 break;
             case 7:     // SBC
+                data = ~data;       // flip the argument and ADC
+
+                if(D)
+                {
+                    data = (unsigned char) (((data >> 4) * 10) + (data & 0xF));
+                    A = (unsigned char) (((A >> 4) * 10) + (A & 0xF));
+                }
+
                 hold = A;
-                A -= data - C;
+                A += data + C;
+
+                if(D)
+                {
+                    A = (unsigned char) (((A / 10) * 16) + (A % 10));
+                }
 
                 V = ((signed char) hold >= 0 && (signed char) data >= 0 && (signed char) A < 0)
                     || ((signed char) hold < 0 && (signed char) data < 0 && (signed char) A >= 0) ? 1 : 0;
 
-                C = (int) hold + data + C > 0xFF ? 1 : 0;
+                C = (int) hold + data + C > (D ? 0x99 : 0xFF) ? 1 : 0;
                 N = (signed char) A < 0 ? 1 : 0;
                 Z = A == 0 ? 1 : 0;
                 break;
