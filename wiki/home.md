@@ -2,12 +2,16 @@
 
 # Quick Start
 
-No command line arguments are needed for running the emulator. The directory that the emulator is in should
-contain the rom subdirectory with rom.bin and vectors.bin to work.
+No command line arguments are needed for running the emulator. The directory containing the emulator should have:
+- `config.json`
+- `roms.json`
+- `tapes` subdirectory containing `.bin` files to act as cassette tapes
+- `rom` subdirectory containing all the roms referenced in roms.json (see Boot Up and Reset Process section)
+- `cards` subdirectory containing peripheral cards (if any are used)
 
-rom.asm contains sample routines to demonstrate functionality of all the hardware components. Simply change
-the example jumped to on line 13 to see what it can do. The first instruction in rom.asm is what will be run
-first, so you may edit it to program it.
+Currently it is configured to load some examples into memory, ready to be run. examples.asm contains sample routines
+to demonstrate functionality of all the hardware components. Simply change the example jumped to on line 13 to
+see what it can do. The first instruction in examples.asm is what will be run first, so you may edit it to program it.
 
 ### Some Useful Tables in the [Reference Manual](http://www.apple-iigs.info/doc/fichiers/appleiiref.pdf)
 (page numbers are in the form `pdf/manual`):
@@ -17,11 +21,16 @@ first, so you may edit it to program it.
 - 27/16: memory map of characters to display while in text mode
 - 89-90/78-79: Usage and addresses of built-in I/O
 
-# Boot up and reset process
+# Boot Up and Reset Process
 
-When the emulator is first started, the interrupt vector table in vectors.bin loaded into address $FFFA.
-As it is now, the reset vector points to address $F800 and the IRQ and NMI vectors both point to $0200.
-rom.bin is then loaded into address $F800, and the CPU reset is triggered.
+When the emulator is first started, it will read `roms.json` and load files into memory. The format of each
+file in `roms.json` should be `"name" : [startAddress, endAddress]`. For example, take `"examples" : [0xF800, 0xFFF9]`
+(numbers in decimal, octal, and hexadecimal are allowed here). It will read `rom/examples.bin` and place it in memory at
+the address `0xF800`. The end address exists to help yourself ensure that the bin file isn't too large if you want
+to load multiple files contiguously and ensure that they don't overlap. The end address is also inclusive, so the
+file in the example will be allowed to occupy address `0xFFF9`, but not go beyond it. If it did, it could be
+overwritten by `rom/vectors.bin`, which is loaded into `0xFFFA`. If the end address is greater than `0xFFFF`, then it will
+be treated as if it were `0xFFFF`. The files are loaded in the order that they appear in `roms.json`.
 
 Once running, the F2 key will "shut down" the system, forcing the CPU to stop running,
 but the emulator will remain open. The F1 key functions as the reset button, triggering the same

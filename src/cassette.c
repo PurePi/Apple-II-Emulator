@@ -4,27 +4,11 @@
 #include <jsmn.h>
 #include "cassette.h"
 #include "memory.h"
+#include "json.h"
 
 static FILE *tape = NULL;
 // 1 = write, 2 = read
 static char mode = 0;
-
-/**
- * checks if token matches str
- * @param json json string
- * @param token token to check
- * @param str string t check against
- * @return 0 = false, 1 = true
- */
-static int jsoneq(const char *json, jsmntok_t *token, const char *str)
-{
-    if (token->type == JSMN_STRING && (int) strlen(str) == token->end - token->start &&
-        strncmp(json + token->start, str, (size_t) (token->end - token->start)) == 0)
-    {
-        return 1;
-    }
-    return 0;
-}
 
 /**
  * reads config.json for "tape" value
@@ -44,8 +28,9 @@ static char *readConfig()
 
         if(fread(json, 1, fileLength, config) != fileLength)
         {
-            printf("Error when opening config file");
+            sprintf(errorMsg, "Error when reading config.json");
             fclose(config);
+            MessageBox(0, errorMsg, "Cassette Error", MB_OK);
             return NULL;
         }
         json[fileLength] = 0;
@@ -53,6 +38,8 @@ static char *readConfig()
     }
     else
     {
+        sprintf(errorMsg, "Error when opening config.json");
+        MessageBox(0, errorMsg, "Cassette Error", MB_OK);
         return NULL;
     }
 
@@ -62,12 +49,14 @@ static char *readConfig()
     int jsmnResult = jsmn_parse(&p, json, strlen(json), tokens, 19);
     if(jsmnResult < 0)
     {
-        printf("Error parsing JSON file\n");
+        sprintf(errorMsg, "Error parsing config.json");
+        MessageBox(0, errorMsg, "Cassette Error", MB_OK);
         return NULL;
     }
     if(jsmnResult == 0 || tokens[0].type != JSMN_OBJECT)
     {
-        printf("Top level of config file should be an object.\n");
+        sprintf(errorMsg, "Top level of config.json should be an object.");
+        MessageBox(0, errorMsg, "Cassette Error", MB_OK);
         return NULL;
     }
 
@@ -82,7 +71,9 @@ static char *readConfig()
             return json;
         }
     }
-    printf("Failed to find cassette\n");
+    sprintf(errorMsg, "Failed to find cassette");
+    MessageBox(0, errorMsg, "Cassette Error", MB_OK);
+    return NULL;
 }
 
 /**

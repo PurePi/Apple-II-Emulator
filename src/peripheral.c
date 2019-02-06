@@ -7,27 +7,9 @@
 #include <dlfcn.h>
 #include <memory.h>
 #include "peripheral.h"
+#include "json.h"
 
 struct peripheralCard peripherals[8] = { 0 };
-
-char errorMsg[FILENAME_MAX] = { 0 };
-
-/**
- * checks if token starts with str
- * @param json json string
- * @param token token to check
- * @param str string t check against
- * @return 0 = false, 1 = true
- */
-static int jsonStart(const char *json, jsmntok_t *token, const char *str)
-{
-    if (token->type == JSMN_STRING && (int) strlen(str) + 1 == token->end - token->start &&
-        strncmp(json + token->start, str, (size_t) (token->end - token->start - 1)) == 0)
-    {
-        return 1;
-    }
-    return 0;
-}
 
 /**
  * reads the config file and loads peripheral cards for use
@@ -48,7 +30,7 @@ char mountCards()
 
         if(fread(json, 1, fileLength, config) != fileLength)
         {
-            sprintf(errorMsg, "Error when reading config file");
+            sprintf(errorMsg, "Error when reading config.json");
             fclose(config);
             MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
             return 0;
@@ -58,7 +40,7 @@ char mountCards()
     }
     else
     {
-        sprintf(errorMsg, "Error when opening config file");
+        sprintf(errorMsg, "Error when opening config.json");
         MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
         return 0;
     }
@@ -69,20 +51,20 @@ char mountCards()
     int jsmnResult = jsmn_parse(&p, json, strlen(json), tokens, 19);
     if(jsmnResult < 0)
     {
-        sprintf(errorMsg, "Error parsing JSON file\n");
+        sprintf(errorMsg, "Error parsing config.json");
         MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
         return 0;
     }
     if(jsmnResult == 0 || tokens[0].type != JSMN_OBJECT)
     {
-        sprintf(errorMsg, "Top level of config file should be an object.\n");
+        sprintf(errorMsg, "Top level of config.json should be an object.");
         MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
         return 0;
     }
 
     for(int tok = 1; tok < jsmnResult; tok++)
     {
-        if(jsonStart(json, &tokens[tok], "slot "))
+        if(jsoneq(json, &tokens[tok], "slot "))
         {
             strncpy(periphCard, json + tokens[tok].start, (size_t) (tokens[tok].end - tokens[tok].start));
             json[tokens[tok+1].end] = 0;

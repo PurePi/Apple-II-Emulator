@@ -8,7 +8,7 @@ find_package(OpenGL REQUIRED)
 include_directories(include)
 link_directories(dependencies)
 
-add_executable(Apple-II WIN32 src/main.c src/memory.c include/memory.h src/cpu.c include/cpu.h src/HIF.c include/HIF.h src/cassette.c src/cassette.h src/peripheral.c src/peripheral.h)
+add_executable(Apple-II WIN32 src/main.c src/memory.c include/memory.h src/cpu.c include/cpu.h src/HIF.c include/HIF.h src/cassette.c src/cassette.h src/peripheral.c include/peripheral.h src/json.c include/json.h)
 
 target_link_libraries(Apple-II glfw ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} jsmn)
 
