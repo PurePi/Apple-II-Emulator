@@ -12,12 +12,12 @@ config.json. For example:
 
 Each card is required to have these functions:
 
-| Function                                  | Purpose                                                                                                                                                                                                                                                                                                                                |
-|-------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| startup                                   | To initialize the card's hardware, like starting any threads if ongoing functionality is needed. If the card is designed for slot 0, it needs to take an unsigned char pointer to the emulator's memory (more info under the "Slot 0" section).                                                                                        |
-| void shutdown()                           | To shut down the hardware (close files, end threads, etc)                                                                                                                                                                                                                                                                              |
-| void deviceSelect(unsigned char)          | Callback function to handle a reference to your card's GPIO space. The parameter is the byte referenced ($00 to $0F). This could be used to bridge software and hardware together by designating a purpose for each byte. When your card is active, your card's PROM and XROM should be the only software interacting with this space. |
-| void memRef(unsigned short) (slot 0 only) | Callback function to handle reference to any memory address ever.                                                                                                                                                                                                                                                                      |
+| Function                                  | Purpose                                                                                                                                                                                                                                         |
+|-------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| startup                                   | To initialize the card's hardware, like starting any threads if ongoing functionality is needed. If the card is designed for slot 0, it needs to take an unsigned char pointer to the emulator's memory (more info under the "Slot 0" section). |
+| void shutdown()                           | To shut down the hardware (close files, end threads, etc)                                                                                                                                                                                       |
+| void deviceSelect(int, unsigned char)     | Callback function to handle a reference to your card's GPIO space. This could be used to bridge software and hardware together by designating a purpose for each byte.                                                                          |
+| void memRef(unsigned short) (slot 0 only) | Callback function to handle reference to any memory address ever.                                                                                                                                                                               |
 
 The signatures for startup:
 
@@ -34,15 +34,18 @@ within functions or have a method of managing multiple instances of any data it 
 This is because there is only one instance of a shared object in memory, therefore only one instance of its
 data. It would be possible to use the card's GPIO space and dynamic memory allocation to achieve this.
 
-Additionally, my emulator implements the device select and I/O strobe lines as flags rather than physical
-wires. There is an example card implementation under the cards/testCard directory to demonstrate everything
+There is an example card implementation under the cards/testCard directory to demonstrate everything
 described here.
 
 ## GPIO
 
-Each card has 16 bytes of the general purpose I/O space from $C080 to $C0FF. Slot 1 gets $C080-C08F, slot
-2 gets $C090-$C09F, etc. The lower 4 bits of the address are consistent regardless of the slot, so you may
-rely on the space to serve a specialized purpose (91/80).
+Each card has 16 bytes of the general purpose I/O space from $C080 to $C0FF. Slot 0 gets $C080-C08F, slot
+1 gets $C090-$C09F, etc. The lower 4 bits of the address are consistent regardless of the slot, so you may
+rely on the space to serve a specialized purpose and interact with the hardware (91/80). When this space is
+referenced, the card's deviceSelect function is called. The int parameter is the byte referenced ($00 to $0F).
+The unsigned char is the value at that address (useful for when PROM or XROM writes to it). When your card is
+active, your card's PROM and XROM should be the only software interacting with this space, although nothing
+stops outside code from referencing this space and triggering this callback.
 
 ## Scratchpad
 Each card has an 8 byte scratchpad throughout pages $04 to $07. There is no callback for references to these
@@ -54,21 +57,18 @@ The PROM is put into a 256-byte space in memory. $C100-$C1FF holds slot 1's PROM
 slot 2's, etc. Generally, the card does not rely on being placed in a specific slot, so this PROM
 should be address-independent. All JMP instructions to other parts of PROM should be replaced with branches
 or forced branches. You may require that a card be put into a specific slot to remove this limitation and
-save several bytes if you're short on space. PROM software is always entered through its lowest address
+save several bytes if you're short on space. PROM software should always be entered through its lowest address
 ($C100, $C200, etc) and typically holds driver software (91/80).
 
 ## XROM
 
 Each card has a 2KB, absolutely-addressed expansion rom that occupies the address space $C800-$CFFF.
 It's important to note that all cards' expansion ROMs share this address space, and only one may be
-accessed at a time. First, the device select (devSel) flag is turned on when the card's GPIO space is
-referenced. This is done by software outside of the card's control, and partially enables the card's XROM.
-Second, the I/O strobe line fully enables the card's XROM, and is triggered by a reference to the card's
-PROM. The devSel flag must be set in order for the I/O strobe flag to be set. Otherwise, your PROM may
-accidentally access the XROM of the previously active card, or if no card has been used yet, an IRQ will
-be triggered. Once the I/O strobe flag has been set, the card's PROM may then reference address $CFFF to
-turn off all cards' devSel flags. Now your card, because its I/O strobe flag is still set, has sole access
-to its XROM (95/84).
+accessed at a time. Any reference to the card's PROM will activate that card's XROM and IOStrobe line.
+Unlike the original implementation, it is not necessary for address $CFFF to disable any flags because
+the emulator itself handles the XROM and decides which to use, rather than having a process of telling the
+cards when they should direct references to XROM to their own on-board memory (95/84). $CFFF has no special
+purpose in this emulator.
 
 ## Slot 0
 
@@ -79,27 +79,5 @@ in this emulator all memory access is done via accessing a single memory array (
 through startup), memory expansion may be emulated by copying the contents of memory into an internal array
 for preservation, and copying contents from elsewhere into memory. This can be controlled via a soft
 switch in its GPIO space. An example of similar bank switching is in memory.c, under the
-`else if(address < 0xC800)` clause, where the XROM of the previous card is swapped out for the newly
+`else if(address < 0xC800)` block, where the XROM of the previous card is swapped out for the newly
 activated one.
-
-## Recap
-
-To use peripheral cards:
-1. A program run by the emulator accesses the GPIO space of the card it wants to use. This does not call that
-card's deviceSelect, but it does turn on the devSel flag.
-2. The program may jump into byte 0 (Address $Cn00) of the card's PROM space. This turns on the I/O strobe
-flag if the devSel flag is on, and will override the previous card's I/O select flag. Regardless, the slot's
-PROM will begin executing. If no card is inserted in this slot, an IRQ will be triggered.
-
-Steps 1 and 2 are done by software on the emulator, and it is on the programmer/user to know
-if a card is in a slot. The emulator has no way of telling its software if a slot is occupied or not.
-
-3. The card's PROM may reference $CFFF to turn off all cards' devSel flags to prevent multiple cards from
-having their XROM activated at the same time.
-4. If your card's I/O strobe flag is set, your card's XROM is active and your PROM may now use it. If the
-card's I/O strobe flag is not set, then the previous card's XROM is active. Your PROM may now use your (or
-the last) card's subroutines in XROM.
-
-If the card is meant for slot 0, its startup function requires an `unsigned char *` argument and the  `memRef`
-function, which will be called any time any memory is accessed. Slot 0 cards do not have space allocated for
-scratchpad, PROM, or XROM. PROM and XROM bin files will not be searched for if a card in slot 0.

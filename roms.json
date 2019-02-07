@@ -1,0 +1,4 @@
+{
+  "examples" : [0xF800, 0xFFF9],
+  "vectors" : [0xFFFA, 0xFFFF]
+}

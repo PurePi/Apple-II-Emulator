@@ -87,7 +87,12 @@ static void ioSelect(unsigned short address)
                 break;
             }
         }
-        else if(address < 0xC060)
+        else if(address == 0xC060 || address == 0xC068)
+        {
+            playback();
+        }
+        // will probably never need to be implemented
+/*        else if(address < 0xC060)
         {
             switch(address)
             {
@@ -154,46 +159,28 @@ static void ioSelect(unsigned short address)
         else if(address < 0xC080)
         {
             // game controller strobe
-        }
-        else if(address < 0xC100)
+        }*/
+        else if(address >= 0xC080 && address < 0xC100)
         {
             // peripheral card GPIO space, set devSel flag for card or callback if the card is active
             int slot = ((address - 0x80) >> 4) & 0xF;
-            //printf("\naccessed GPIO space address %04X\n", address);
-            if(peripherals[slot].devSel || peripherals[slot].IOStrobe)
+            if(peripherals[slot].IOStrobe)
             {
-                //printf("slot %d device select callback\n", slot);
                 memory[address] = peripherals[slot].deviceSelect(address & 0xF, memory[address]);
-            }
-            else
-            {
-                //printf("turning on slot %d devSel\n", slot);
-                peripherals[slot].devSel = 1;
             }
         }
         else if(address < 0xC800)
         {
-            // if accessing card's PROM space, and the card's devSel flag is on, swap out XROM
+            // if accessing card's PROM space and it's not already active, swap out XROM
             int slot = (address >> 8) & 0xF;
-            if(peripherals[slot].devSel && !peripherals[slot].IOStrobe)
+            if(!peripherals[slot].IOStrobe)
             {
-                //printf("swapping slot %d XROM for slot %d\n", selectedXROM, slot);
-                // selectedRom has an initial value of 0, so since slot 0's XROM is never used, this is fine
+                // selectedXROM has an initial value of 0, so since slot 0's XROM is never used, this is fine when activating the very first card
                 peripherals[selectedXROM].IOStrobe = 0; // deactivate previous card so it'll pass this check again next time it's used
                 memcpy(peripherals[selectedXROM].expansionRom, memory + 0xC800, 0x800);
                 memcpy(memory + 0xC800, peripherals[slot].expansionRom, 0x800);
                 selectedXROM = slot;
                 peripherals[slot].IOStrobe = 1;
-            }
-        }
-        else if(address == 0xCFFF)
-        {
-            // all other addresses in XROM space are treated normally because the contents of the
-            // selected XROM are copied into the normal memory array above
-            //printf("turning off all cards' devSel\n");
-            for(int card = 1; card < 8; card++)
-            {
-                peripherals[card].devSel = 0;
             }
         }
     }

@@ -1,39 +1,32 @@
-                     * listing for testCardPROM.asm generated on 2019-1-23 at 17:43:38
+                       * listing for testCardPROM.asm generated on 2019-1-6 at 18:21:32
 
-0000:              1         ; sample PROM to demonstrate functionality
-0000:              2         ; address-independent in this example, so no ORG needed
-0000:              3 
-0000:              4         INL "stdlib.asm"    ; used for SAVE
-0000:              4 * BEGINNING OF FILE "stdlib.asm"
-0000:              1         ; memory locations for ROM subroutines (will change as ROM changes)
-0000:              2 
-0000:              3 SAVE    EQU $FA97
-0000:              4 RESTORE EQU $FAA6
-0000:              5 * END OF FILE "stdlib.asm"
-0000:              5 
-0000:  20 97 FA    6         JSR SAVE        ; save all registers
-0003:  78          7         SEI             ; disable interrupts
-0004:  BA          8         TSX             ; stack pointer points to page of return address that JSR just pushed, slot n is in the form of $Cn
-0005:  BD 00 01    9         LDA $0100,X     ; load that page number into A
-0008:  8D F8 07   10         STA $07F8       ; $7F8 is designated to keep page number of active card
-000B:  29 0F      11         AND #$0F
-000D:  A8         12         TAY             ; put the slot number as $0n int Y (will use this later)
-000E:  0A         13         ASL A
-000F:  0A         14         ASL A
-0010:  0A         15         ASL A
-0011:  0A         16         ASL A
-0012:  AA         17         TAX             ; X now has slot number in the form of $n0
-0013:  4A         18         LSR A
-0014:  4A         19         LSR A
-0015:  4A         20         LSR A
-0016:  4A         21         LSR A           ; A now has the slot number as $0n again
-0017:  9D 80 C0   22         STA $C080,X     ; put it in byte 0 of your card's GPIO space to tell the card which slot it's in
-001A:  BD 84 C0   23         LDA $C084,X     ; read from byte 4 of your card's GPIO space (which the card will always put 42 into) (can go up to $C08F,X for byte 15)
-001D:  99 78 04   24         STA $0478,Y     ; put it into byte 0 of scratchpad
-0020:  99 F8 04   25         STA $04F8,Y     ; also into byte 1 of scratchpad (the rest are $0578,Y, $05F8,Y, ... up to $07F8,Y)
-0023:  AD FF CF   26         LDA $CFFF       ; prevent any other cards from activating their expansion rom by referencing $CFFF
-0026:  20 00 C8   27         JSR $C800       ; can now safely access your card's expansion rom ($C800-$CFFF)
-0029:  20 A6 FA   28         JSR RESTORE     ; restore registers from before
-002C:  60         29         RTS             ; PROM should always be JSR'ed to, so we RTS when it's done
+0000	             1         ; sample PROM to demonstrate functionality
+0000	             2         ; address-independent in this example, so no ORG needed
+0000	             3 
+0000	             4 SOMWHER EQU $F8F7       ; some absolutely addresses subroutine somewhere else in memory, which ideally would do something useful
+0000	             5                         ; we know that a subroutine (just RTS right now) is at this address by generating and looking at examples_listing.txt
+0000	             6 
+0000	20 F7 F8     7         JSR SOMWHER     ; JSR somewhere to push the current page onto the stack
+0003	78           8         SEI             ; disable interrupts
+0004	BA           9         TSX             ; stack pointer points to page of return address that JSR just pushed, slot n is in the form of $Cn
+0005	BD 00 01    10         LDA $0100,X     ; load that page number into A
+0008	8D F8 07    11         STA $07F8       ; $7F8 is designated to keep page number of active card
+000B	29 0F       12         AND #$0F
+000D	A8          13         TAY             ; put the slot number as $0n int Y (will use this later)
+000E	0A          14         ASL A
+000F	0A          15         ASL A
+0010	0A          16         ASL A
+0011	0A          17         ASL A
+0012	AA          18         TAX             ; X now has slot number in the form of $n0
+0013	4A          19         LSR A
+0014	4A          20         LSR A
+0015	4A          21         LSR A
+0016	4A          22         LSR A           ; A now has the slot number as $0n again
+0017	9D 80 C0    23         STA $C080,X     ; put it in byte 0 of your card's GPIO space to tell the card which slot it's in
+001A	BD 84 C0    24         LDA $C084,X     ; read from byte 4 of your card's GPIO space (which the card will always put 42 into) (can go up to $C08F,X for byte 15)
+001D	99 78 04    25         STA $0478,Y     ; put it into byte 0 of scratchpad
+0020	99 F8 04    26         STA $04F8,Y     ; also into byte 1 of scratchpad (the rest are $0578,Y, $05F8,Y, ... up to $07F8,Y)
+0023	20 00 C8    27         JSR $C800       ; can now safely access your card's expansion rom ($C800-$CFFF)
+0026	60          28         RTS             ; PROM should always be JSR'ed to, so we RTS when it's done
 
-                     * Assembled 45 bytes
+                       * Assembled 39 bytes

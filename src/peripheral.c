@@ -64,7 +64,7 @@ char mountCards()
 
     for(int tok = 1; tok < jsmnResult; tok++)
     {
-        if(jsoneq(json, &tokens[tok], "slot "))
+        if(jsonStart(json, &tokens[tok], "slot "))
         {
             strncpy(periphCard, json + tokens[tok].start, (size_t) (tokens[tok].end - tokens[tok].start));
             json[tokens[tok+1].end] = 0;

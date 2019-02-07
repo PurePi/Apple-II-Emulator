@@ -156,30 +156,13 @@ hires   LDY #$00
 
 *       using peripheral cards in slot 1 and 4 example (both contain the same card)
 
-card    STA $C090       first need to reference slot 1's GPIO space to select it
-        JSR $C100       jump to its PROM
-        STA $C0C4       now let's use slot 4 (can reference any byte in its GPIO space, not only byte 0)
-        JSR $C400
-        STA $C090       and slot 1 again (remember that this first reference does not trigger its callback, only enables it)
-        JSR $C100
+card    JSR $C100       jump to slot 1's PROM
+        JSR $C400       now slot 4
+        JSR $C100       and slot 1 again
         HCF
 
-*       ROM subroutines
-
-SAVE    STA ACC
-        STX XREG
-        STY YREG
-        PHP
-        PLA
-        STA STATUS
-        TSX
-        STX SPTR
-        CLD
-        RTS
-RESTORE LDA STATUS
-        PHA
-        LDA ACC
-        LDX XREG
-        LDY YREG
-        PLP
-        RTS
+        RTS             dummy subroutine, see testCardPROM.asm (this is where SOMWHER points to)
+*                       if you change any code above this RTS, then its address will most likely move so
+*                       then testCardPROM won't jump to it successfully because some other bytes will be at $F8F7
+*                       I suggest writing new code after this line and changing line 13 to JMP down here if you
+*                       choose to modify this file

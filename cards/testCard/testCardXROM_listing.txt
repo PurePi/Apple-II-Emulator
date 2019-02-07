@@ -1,12 +1,13 @@
-                     * listing for testCardXROM.asm generated on 2019-1-23 at 17:42:24
+                       * listing for testCardXROM.asm generated on 2019-1-6 at 17:59:55
 
-0000:              1         ; sample XROM
-0000:              2 
-0000:              3         ; XROM is absolutely addresses, so we do ORG
-C800:              4         ORG $C800
-C800:              5 
-C800:  A9 3F       6         LDA #$3F        ; just have whatever subroutines that don't fit into PROM here
-C802:  A2 54       7         LDX #$54
-C804:  60          8         RTS
+0000	             1         ; sample XROM
+0000	             2 
+0000	             3         ; XROM is absolutely addresses, so we do ORG
+C800	             4         ORG $C800
+C800	             5 
+C800	A9 3F        6         LDA #$3F        ; just have whatever subroutines that don't fit into PROM here
+C802	9D 81 C0     7         STA $C081,X
+C805	A2 54        8         LDX #$54
+C807	60           9         RTS
 
-                     * Assembled 5 bytes
+                       * Assembled 8 bytes

@@ -12,7 +12,6 @@ struct peripheralCard
     void (*memRef)(unsigned short address);
     unsigned char (*deviceSelect)(int which, unsigned char value);
     char expansionRom[0x800];
-    char devSel;
     char IOStrobe;
 };
 
