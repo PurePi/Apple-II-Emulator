@@ -224,7 +224,6 @@ static int executeInstruction()
         push(PCHI);
         push(PCLO);
         // jump to address in argument
-        //printf("JSR to %04X\n", *((unsigned short *) (memory + PC - 1)));
         PC = *((unsigned short *) (memory + PC - 1));
     }
     else if(IS_JMP_ABS(currentInstruction))
@@ -317,15 +316,23 @@ static int executeInstruction()
                     break;
                 case 4:     // DEY
                     Y--;
+                    N = (signed char) Y < 0 ? 1 : 0;
+                    Z = Y == 0 ? 1 : 0;
                     break;
                 case 5:     // TAY
                     Y = A;
+                    N = (signed char) Y < 0 ? 1 : 0;
+                    Z = Y == 0 ? 1 : 0;
                     break;
                 case 6:     // INY
                     Y++;
+                    N = (signed char) Y < 0 ? 1 : 0;
+                    Z = Y == 0 ? 1 : 0;
                     break;
                 default:    // INX
                     X++;
+                    N = (signed char) X < 0 ? 1 : 0;
+                    Z = X == 0 ? 1 : 0;
                     break;
                 }
                 break;
@@ -346,6 +353,8 @@ static int executeInstruction()
                         break;
                     case 4:     // TYA
                         A = Y;
+                    N = (signed char) A < 0 ? 1 : 0;
+                    Z = A == 0 ? 1 : 0;
                         break;
                     case 5:     // CLV
                         V = 0;
@@ -371,12 +380,18 @@ static int executeInstruction()
                 {
                 case 4:      // TXA
                     A = X;
+                    N = (signed char) A < 0 ? 1 : 0;
+                    Z = A == 0 ? 1 : 0;
                     break;
                 case 5:      // TAX
                     X = A;
+                    N = (signed char) X < 0 ? 1 : 0;
+                    Z = X == 0 ? 1 : 0;
                     break;
                 case 6:      // DEX
                     X--;
+                    N = (signed char) X < 0 ? 1 : 0;
+                    Z = X == 0 ? 1 : 0;
                     break;
                 case 7:      // NOP
                     // NOP
@@ -394,6 +409,8 @@ static int executeInstruction()
                 else        // TSX
                 {
                     X = S;
+                    N = (signed char) X < 0 ? 1 : 0;
+                    Z = X == 0 ? 1 : 0;
                 }
                 break;
             default:

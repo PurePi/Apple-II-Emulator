@@ -1000,6 +1000,18 @@ static void keyInput(GLFWwindow* window, int key, int scancode, int action, int 
     case GLFW_KEY_F4:
         setPlay();
         return;
+    case GLFW_KEY_F5:
+        if(diskDoor)
+        {
+            diskDoor(0);
+        }
+        return;
+    case GLFW_KEY_F6:
+        if(diskDoor)
+        {
+            diskDoor(1);
+        }
+        return;
     case GLFW_KEY_ESCAPE:
         WaitForSingleObject(memMutex, INFINITE);
         memset(memory + 0xC000, 0x9B, 16);

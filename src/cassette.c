@@ -65,9 +65,9 @@ static char *readConfig()
         if(jsoneq(json, &tokens[tok], "tape"))
         {
             json[tokens[tok+1].end] = 0;
-            memcpy(json, "tapes/", 6);
-            memcpy(json + 6, json + tokens[tok+1].start, strlen(json + tokens[tok+1].start));
-            memcpy(json + 6 + strlen(json + tokens[tok+1].start), ".bin", 5);
+            memmove(json, "tapes/", 6);
+            memmove(json + 6, json + tokens[tok+1].start, strlen(json + tokens[tok+1].start));
+            memmove(json + 6 + strlen(json + tokens[tok+1].start), ".bin", 5);
             return json;
         }
     }

@@ -81,3 +81,12 @@ for preservation, and copying contents from elsewhere into memory. This can be c
 switch in its GPIO space. An example of similar bank switching is in memory.c, under the
 `else if(address < 0xC800)` block, where the XROM of the previous card is swapped out for the newly
 activated one.
+
+## Disk-II-Controller
+
+A card named "Disk-II-Controller" additionally is required to have the function `void diskDoor(int)`
+to handle opening/closing the doors of up to two floppy disk drives. Pressing F5 will call `diskDoor(0)`
+(for drive A) and pressing F6 will call `diskDoor(1)` (for drive B). This is intended to let the card handle
+file management and effectively let the user insert/eject floppy disks. It also must have
+`char fileDirectory[FILENAME_MAX]`, used to give the card the absolute location of the emulator. My own
+implementation of this card is  [here](https://github.com/PurePi/Disk-II-Controller).

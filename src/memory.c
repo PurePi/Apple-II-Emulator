@@ -164,6 +164,7 @@ static void ioSelect(unsigned short address)
         {
             // peripheral card GPIO space, set devSel flag for card or callback if the card is active
             int slot = ((address - 0x80) >> 4) & 0xF;
+
             if(peripherals[slot].IOStrobe)
             {
                 memory[address] = peripherals[slot].deviceSelect(address & 0xF, memory[address]);

@@ -1,15 +1,16 @@
 #include <stdio.h>
-#include <jsmn.h>
-#include <malloc.h>
 #include <mem.h>
 #include <ctype.h>
 #include <errno.h>
 #include <dlfcn.h>
-#include <memory.h>
+#include <direct.h>
+#include "memory.h"
+#include "jsmn.h"
 #include "peripheral.h"
 #include "json.h"
 
 struct peripheralCard peripherals[8] = { 0 };
+void (*diskDoor)(int) = NULL;
 
 /**
  * reads the config file and loads peripheral cards for use
@@ -92,6 +93,28 @@ char mountCards()
             }
 
             peripherals[cardNumber].handle = dlopen(periphCard, RTLD_LAZY | RTLD_LOCAL);
+
+            if(strcmp(periphCard, "cards/Disk-II-Controller.dll") == 0)
+            {
+                // super special case card
+                diskDoor = dlsym(peripherals[cardNumber].handle, "diskDoor");
+                if(diskDoor == NULL)
+                {
+                    sprintf(errorMsg, "Could not find diskDoor in %s", periphCard);
+                    MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
+                    return 0;
+                }
+                char *directory = dlsym(peripherals[cardNumber].handle, "fileDirectory");
+                if(directory == NULL)
+                {
+                    sprintf(errorMsg, "Could not find fileDirectory in %s", periphCard);
+                    MessageBox(0, errorMsg, "Peripheral Card Error", MB_OK);
+                    return 0;
+                }
+                _getcwd(directory, FILENAME_MAX);
+                directory[strlen(directory)] = '\\';
+            }
+
             peripherals[cardNumber].startup = dlsym(peripherals[cardNumber].handle, "startup");
             if(peripherals[cardNumber].startup == NULL)
             {

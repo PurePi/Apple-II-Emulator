@@ -19,5 +19,6 @@ extern struct peripheralCard peripherals[8];
 
 extern char mountCards();
 extern void unmountCards();
+extern void (*diskDoor)(int);
 
 #endif //APPLE_II_EMULATOR_PERIPHERAL_H
